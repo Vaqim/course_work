@@ -5,38 +5,61 @@
     <title>Завдання 1</title>
     <link rel="stylesheet" href="./css/style.css">
     <script src='./js/task1.js'></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="./js/Chart.js"></script>
 </head>
 <body>
     <nav>
         <a href="index.html">Курсова робота</a>
-        <a href="task1.html">Завдання 1</a>
+        <a href="task1.html" class='active'>Завдання 1</a>
         <a href="task2.html">Завдання 2</a>
         <a href="task3.html">Завдання 3</a>
         <a href="task4.html">Завдання 4</a>
     </nav>
     
-    <article>
+    <article> <!-- main -->
         <h2>Завдання 1</h2>
         <p>
             Побудувати в математичному пакеті графік функції f(x) та приблизно визначити один із коренів рівняння. Розв’язати рівняння методами ітерацій, дихотомії, Ньютона з точністю ε=10^-4:
         </p>
         <p> 
             X1: 
-            <input type="text" id="x1Main" placeholder="-1">
+            <input type="text" id="x1Main" placeholder="0" value="-3"><br><br>
             X2: 
-            <input type="text" id="x2Main" placeholder="2">
+            <input type="text" id="x2Main" placeholder="0" value="3">
         </p>
         <p>
-            Кількість розбиттів:
-            <input type="text" id="stepMain" placeholder="0.1">
+            <button id="drawMain">Намалювати графік</button>
         </p>
-        <p>
-            <button id="drawMain">Знайти відрізок</button>
+        <p id="mainErrors">
+
         </p>
         <canvas width="300" height="200" id="main">
             
         </canvas>
+    </article>
+
+    <article> <!-- iteration -->
+        <p>Метод ітерацій: </p>
+        <p>
+            <canvas width="300" height="200" id="iter"></canvas>
+        </p>
+        <p>
+            Крок:
+            <input type="text" id="stepIter" placeholder="0.1" value="0.1">
+        </p>
+        <p>
+            <button id="drawIter">Намалювати графік</button>
+        </p>
+    </article>
+
+    <article> <!-- duhotomy -->
+        <p>Метод дихотомії</p>
+        <p>
+            <canvas width="300" height="200" id="duhot"></canvas>
+        </p>
+        <p>
+            <button id="drawDuhot">Намалювати графік</button>
+        </p>
     </article>
     
 
