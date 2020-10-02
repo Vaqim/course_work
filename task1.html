@@ -23,7 +23,7 @@
         </p>
         <p> 
             X1: 
-            <input type="text" id="x1Main" placeholder="0" value="-3"><br><br>
+            <input type="text" id="x1Main" placeholder="0" value="0"><br><br>
             X2: 
             <input type="text" id="x2Main" placeholder="0" value="3">
         </p>
@@ -45,7 +45,7 @@
         </p>
         <p>
             Крок:
-            <input type="text" id="stepIter" placeholder="0.1" value="0.1">
+            <input type="text" id="stepIter" placeholder="0.3" value="0.3">
         </p>
         <p>
             <button id="drawIter">Намалювати графік</button>
@@ -59,10 +59,24 @@
         </p>
         <p>
             Кількість розбиттів:
-            <input type="text" id="numberOfItersDuhot" placeholder="5" value="5">
+            <input type="text" id="numberOfItersDuhot" placeholder="3" value="3">
         </p>
         <p>
             <button id="drawDuhot">Намалювати графік</button>
+        </p>
+    </article>
+
+    <article> <!-- newton -->
+        <p>Метод Н'ютона</p>
+        <p>
+            <canvas width="300" height="200" id="newton"></canvas>
+        </p>
+        <p>
+            Крок:
+            <input type="text" id="newtonStep" placeholder="0.5" value="0.5">
+        </p>
+        <p>
+            <button id="drawNewton">Намалювати графік</button>
         </p>
     </article>
     

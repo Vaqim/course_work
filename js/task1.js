@@ -1,7 +1,13 @@
 window.onload = function() {
     
     function f(x) {
+        //return Math.pow(x, 2) - Math.log(x);
         return Math.pow(x, 2) - Math.cos(x);
+    }
+
+    function F(x) {
+        //return 2 * x + (-1 / x);
+        return 2 * x + Math.sin(x);
     }
 
     function iteratorFunc(a, b, n) {
@@ -23,16 +29,10 @@ window.onload = function() {
 
     function duhotFunc(start, end, iterations) {
         let results = {
-            start: {
-
-            },
-            center: {
-
-            },
-            end: {
-                
-            }
-        }; // {green} {center} {red}
+            green: {},
+            center: {},
+            red: {}
+        };
         let center;
 
         for(let i = 1; i < iterations; i++) {
@@ -40,7 +40,7 @@ window.onload = function() {
             center = (start + end) / 2;
 
             if(f(center) * f(end) <= 0){
-                start = center
+                start = center;
             } else {
                 end = center;
             }
@@ -50,15 +50,17 @@ window.onload = function() {
         results.center.y = +f((start + end) / 2).toFixed(2);
 
         if(f((start + end) / 2) * f(end) <= 0){
-            results.start.x = +(end).toFixed(2);
-            results.start.y = +f(end).toFixed(2);
-            results.end.x = +(start).toFixed(2);
-            results.end.y = +f(start).toFixed(2);
+            results.green.x = +(end).toFixed(2);
+            results.green.y = +f(end).toFixed(2);
+            results.red.x = +(start).toFixed(2);
+            results.red.y = +f(start).toFixed(2);
+        } else if(f((start + end) / 2) * f(start) <= 0) {
+            results.green.x = +(start).toFixed(2);
+            results.green.y = +f(start).toFixed(2);
+            results.red.x = +(end).toFixed(2);
+            results.red.y = +f(end).toFixed(2);
         } else {
-            results.start.x = +(start).toFixed(2);
-            results.start.y = +f(start).toFixed(2);
-            results.end.x = +(end).toFixed(2);
-            results.end.y = +f(end).toFixed(2);
+            return false;
         }
         return results;
     }
@@ -68,6 +70,69 @@ window.onload = function() {
         for (let i = start; i <= end; i += step){
             result.push(+i.toFixed(2));
         }
+        return result;
+    }
+
+    function newtonFunc(start, end, step){
+
+        let result = [];
+        let counter = 1;
+
+        let first = start;
+
+        while( Math.abs(f(end)) > step ){
+            counter++;
+            let buffer = end;
+            end += (-f(end) / F(end));
+            if (end < start) return false;
+
+            result.push({
+                label: `дотична ${counter}`, // Name it as you want
+                function: () => {},
+                data: [{
+                    x: +(buffer).toFixed(2),
+                    y: +(f(buffer)).toFixed(2)
+                },
+                {
+                    x: +(end).toFixed(2),
+                    y: 0
+                }], // Don't forget to add an empty data array, or else it will break
+                borderColor: "red",
+                borderWidth: 2,
+                order: 0,
+                fill: false,
+                radius: 0,
+                order: 0
+            }, {
+                label: '', // Name it as you want
+                function: () => {},
+                data: [
+                {
+                    x: +(end).toFixed(2),
+                    y: 0
+                },
+                {
+                    x: +(end).toFixed(2),
+                    y: +(f(end).toFixed(2))
+                }], // Don't forget to add an empty data array, or else it will break
+                borderColor: "green",
+                borderWidth: 2,
+                order: 0,
+                fill: false,
+                radius: 0,
+                order: 0
+            });
+
+
+            
+            console.log(`end: ${end}`)
+            console.log(`buffer: ${buffer}`);
+            console.log('***')
+        }
+
+        console.log(`finished end: ${end}`);
+
+
         return result;
     }
 
@@ -155,7 +220,8 @@ window.onload = function() {
                 data: [], // Don't forget to add an empty data array, or else it will break
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
-                radius: 0
+                radius: 0,
+                order: 1
             },
             {
                 label: "Корінь", // Name it as you want
@@ -168,8 +234,8 @@ window.onload = function() {
                     x: +(results[1].x).toFixed(2),
                     y: +(results[1].y).toFixed(2)
                 }], // Don't forget to add an empty data array, or else it will break
-                borderColor: "red",
-                borderWidth: 12,
+                borderColor: "green",
+                borderWidth: 5,
                 order: 0,
                 fill: false,
                 radius: 0
@@ -228,6 +294,8 @@ window.onload = function() {
 
         let results = duhotFunc(x1, x2, numberOfIters);
         console.log(results);
+        if( results === false ) return;
+        
 
         let data = {
             labels: getArrayRange(x1, x2, 0.01),
@@ -237,39 +305,42 @@ window.onload = function() {
                 data: [], // Don't forget to add an empty data array, or else it will break
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
-                radius: 0
+                radius: 0,
+                order: 1
             },{
                 label: "Корінь", // Name it as you want
                 function: () => {},
                 data: [{
-                    x: results.start.x,
-                    y: results.start.y
+                    x: results.green.x,
+                    y: results.green.y
                 },
                 {
                     x: results.center.x,
                     y: results.center.y
                 }], // Don't forget to add an empty data array, or else it will break
                 borderColor: "green",
-                borderWidth: 12,
+                borderWidth: 5,
                 order: 0,
                 fill: false,
-                radius: 0
+                radius: 0,
+                order: 0
             },{
-                label: "Корінь", // Name it as you want
+                label: "Не корінь", // Name it as you want
                 function: () => {},
                 data: [{
-                    x: results.end.x,
-                    y: results.end.y
+                    x: results.red.x,
+                    y: results.red.y
                 },
                 {
                     x: results.center.x,
                     y: results.center.y
                 }], // Don't forget to add an empty data array, or else it will break
                 borderColor: "red",
-                borderWidth: 12,
+                borderWidth: 5,
                 order: 0,
                 fill: false,
-                radius: 0
+                radius: 0,
+                order: 0
             }]
         }
 
@@ -312,4 +383,70 @@ window.onload = function() {
 
 
     })
+
+    document.getElementById('drawNewton').addEventListener('click', () => {
+
+        let x1 = +document.getElementById('x1Main').value || 0;
+        let x2 = +document.getElementById('x2Main').value || 0;
+
+        let step = +document.getElementById('newtonStep').value || 0.5;
+
+        const ctx = document.getElementById('newton').getContext('2d');
+
+        let data = {
+            labels: getArrayRange(x1, x2, 0.01),
+            datasets: [{
+                label: "f(x) ", // Name it as you want
+                function: f,
+                data: [], // Don't forget to add an empty data array, or else it will break
+                borderColor: "rgba(75, 192, 192, 1)",
+                fill: false,
+                radius: 0,
+                order: 1
+            }]
+        }
+
+        let results = newtonFunc(x1, x2, step);
+
+        data.datasets = data.datasets.concat(results);
+
+        Chart.pluginService.register({
+            beforeInit: function(chart) {
+                // We get the chart data
+                let data = chart.config.data;
+        
+                // For every dataset ...
+                for (let i = 0; i < data.datasets.length; i++) {
+        
+                    // For every label ...
+                    for (let j = 0; j < data.labels.length; j++) {
+        
+                        // We get the dataset's function and calculate the value
+                        let fct = data.datasets[i].function,
+                            x = data.labels[j],
+                            y = fct(x);
+                        // Then we add the value to the dataset data
+                        data.datasets[i].data.push(y);
+                    }
+                }
+            }
+        });
+
+        let myBarChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+
+    });
 }
