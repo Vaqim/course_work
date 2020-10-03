@@ -68,3 +68,24 @@ button:active {
   box-shadow: 0 5px #666;
   transform: translateY(4px);
 }
+
+.error {
+	color: #D8000C;
+  background-color: #FFBABA;
+  width: 20%;
+  margin: 0 auto;
+}
+
+.warning {
+	color: #9F6000;
+  background-color: #FEEFB3;
+  width: 20%;
+  margin: 0 auto;
+}
+
+.success {
+	color: #4F8A10;
+  background-color: #DFF2BF;
+  width: 20%;
+  margin: 0 auto;
+}

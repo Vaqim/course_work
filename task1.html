@@ -30,9 +30,9 @@
         <p>
             <button id="drawMain">Намалювати графік</button>
         </p>
-        <p id="mainErrors">
+        <div id="mainErrors" class="error">
 
-        </p>
+        </div>
         <canvas width="300" height="200" id="main">
             
         </canvas>
@@ -43,6 +43,9 @@
         <p>
             <canvas width="300" height="200" id="iter"></canvas>
         </p>
+
+        <div id="iterErrors"></div>
+        
         <p>
             Крок:
             <input type="text" id="stepIter" placeholder="0.3" value="0.3">
@@ -57,6 +60,7 @@
         <p>
             <canvas width="300" height="200" id="duhot"></canvas>
         </p>
+        <div id="duhotErrors"></div>
         <p>
             Кількість розбиттів:
             <input type="text" id="numberOfItersDuhot" placeholder="3" value="3">
@@ -71,9 +75,10 @@
         <p>
             <canvas width="300" height="200" id="newton"></canvas>
         </p>
+        <div id="newtonErrors"></div>
         <p>
-            Крок:
-            <input type="text" id="newtonStep" placeholder="0.5" value="0.5">
+            Точність:
+            <input type="text" id="newtonStep" placeholder="0.04" value="0.04">
         </p>
         <p>
             <button id="drawNewton">Намалювати графік</button>

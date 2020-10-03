@@ -11,16 +11,19 @@ window.onload = function() {
     }
 
     function iteratorFunc(a, b, n) {
-        let result = [{}, {}];
+        let result = {
+            start: {},
+            end: {}
+        };
 
         for (let i = a; i < b; i += n){
 
             let j = +i.toFixed(2);
             if (f(j) === 0 || f(j) * f(j + n) < 0) {
-                result[0].x = j;
-                result[0].y = f(j);
-                result[1].x = j + n;
-                result[1].y = f(j + n);
+                result.start.x = j;
+                result.start.y = f(j);
+                result.end.x = j + n;
+                result.end.y = f(j + n);
                 return result;
             }
         }
@@ -78,8 +81,6 @@ window.onload = function() {
         let result = [];
         let counter = 1;
 
-        let first = start;
-
         while( Math.abs(f(end)) > step ){
             counter++;
             let buffer = end;
@@ -122,16 +123,8 @@ window.onload = function() {
                 radius: 0,
                 order: 0
             });
-
-
-            
-            console.log(`end: ${end}`)
-            console.log(`buffer: ${buffer}`);
-            console.log('***')
         }
-
-        console.log(`finished end: ${end}`);
-
+        result.push(+end.toFixed(4));
 
         return result;
     }
@@ -140,10 +133,14 @@ window.onload = function() {
 
         let x1 = +document.getElementById('x1Main').value || 0;
         let x2 = +document.getElementById('x2Main').value || 0;
+        let errorsField = document.getElementById('mainErrors');
 
-
-        if (x1 >= x2) throw new Error('x1 >= x2');
-
+        errorsField.textContent = '';
+        if (x1 >= x2) {
+            errorsField.append('X1 >= X2');
+            return false;
+        }
+        
         const ctx = document.getElementById('main').getContext('2d');
 
         let data = {
@@ -201,16 +198,30 @@ window.onload = function() {
         let x1 = +document.getElementById('x1Main').value || 0;
         let x2 = +document.getElementById('x2Main').value || 0;
 
-        let step = +document.getElementById('stepIter').value || 0.1;
+        let step = +document.getElementById('stepIter').value || 0.3;
 
-        if (x1 >= x2) throw new Error('x1 >= x2');
-        if (step <= 0) throw new Error('negative step');
+        let errorsField = document.getElementById('iterErrors');
+
+        errorsField.textContent = '';
+
+        if (step <= 0) {
+            errorsField.className = 'error';
+            errorsField.append('negative step');
+            return false;
+        }
 
         const ctx = document.getElementById('iter').getContext('2d');
 
         let results = iteratorFunc(x1, x2, step);
         
-        if(!results) return;
+        if(!results) {
+            errorsField.className = 'warning';
+            errorsField.append('no roots');
+            return false;
+        }
+
+        errorsField.className = 'success';
+        errorsField.append(`root is: ~${+((results.start.x + results.end.x) / 2).toFixed(4)}`);
 
         let data = {
             labels: getArrayRange(x1, x2, step),
@@ -227,12 +238,12 @@ window.onload = function() {
                 label: "Корінь", // Name it as you want
                 function: () => {},
                 data: [{
-                    x: +(results[0].x).toFixed(2),
-                    y: +(results[0].y).toFixed(2)
+                    x: +(results.start.x).toFixed(2),
+                    y: +(results.start.y).toFixed(2)
                 },
                 {
-                    x: +(results[1].x).toFixed(2),
-                    y: +(results[1].y).toFixed(2)
+                    x: +(results.end.x).toFixed(2),
+                    y: +(results.end.y).toFixed(2)
                 }], // Don't forget to add an empty data array, or else it will break
                 borderColor: "green",
                 borderWidth: 5,
@@ -285,17 +296,30 @@ window.onload = function() {
         let x1 = +document.getElementById('x1Main').value || 0;
         let x2 = +document.getElementById('x2Main').value || 0;
 
-        let numberOfIters = document.getElementById('numberOfItersDuhot').value || 0;
+        let numberOfIters = document.getElementById('numberOfItersDuhot').value || 3;
 
-        if (x1 >= x2) throw new Error('x1 >= x2');
-        if (numberOfIters <= 0) throw new Error('negative step');
+        let errorsField = document.getElementById('duhotErrors');
 
-        const ctx = document.getElementById('duhot').getContext('2d');
+        errorsField.textContent = '';
+
+        if (numberOfIters < 0) {
+            errorsField.className = 'error';
+            errorsField.append('negative iterator counter');
+            return false;
+        }
 
         let results = duhotFunc(x1, x2, numberOfIters);
-        console.log(results);
-        if( results === false ) return;
-        
+
+        if(!results) {
+            errorsField.className = 'warning';
+            errorsField.append('no roots');
+            return false;
+        }
+
+        errorsField.className = 'success';
+        errorsField.append(`root is: ~${+((results.green.x + results.center.x) / 2).toFixed(4)}`);
+
+        const ctx = document.getElementById('duhot').getContext('2d');
 
         let data = {
             labels: getArrayRange(x1, x2, 0.01),
@@ -389,7 +413,17 @@ window.onload = function() {
         let x1 = +document.getElementById('x1Main').value || 0;
         let x2 = +document.getElementById('x2Main').value || 0;
 
-        let step = +document.getElementById('newtonStep').value || 0.5;
+        let step = +document.getElementById('newtonStep').value || 0.04;
+
+        let errorsField = document.getElementById('newtonErrors');
+
+        errorsField.textContent = '';
+
+        if (step < 0) {
+            errorsField.className = 'error';
+            errorsField.append('negative step');
+            return false;
+        }
 
         const ctx = document.getElementById('newton').getContext('2d');
 
@@ -407,6 +441,9 @@ window.onload = function() {
         }
 
         let results = newtonFunc(x1, x2, step);
+
+        errorsField.className = 'success';
+        errorsField.append(`root is: ${results.pop()}`);
 
         data.datasets = data.datasets.concat(results);
 
@@ -445,8 +482,5 @@ window.onload = function() {
                 }
             }
         });
-
-
-
     });
 }
