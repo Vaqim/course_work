@@ -442,6 +442,12 @@ window.onload = function() {
 
         let results = newtonFunc(x1, x2, step);
 
+        if(!results){
+            errorsField.className = 'warning';
+            errorsField.append('no roots');
+            return false;
+        }
+
         errorsField.className = 'success';
         errorsField.append(`root is: ${results.pop()}`);
 
