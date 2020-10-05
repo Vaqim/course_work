@@ -18,7 +18,7 @@ window.onload = function() {
 
         for (let i = a; i < b; i += n){
 
-            let j = +i.toFixed(2);
+            let j = +i.toFixed(4);
             if (f(j) === 0 || f(j) * f(j + n) < 0) {
                 result.start.x = j;
                 result.start.y = f(j);
