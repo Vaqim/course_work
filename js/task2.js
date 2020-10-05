@@ -1,6 +1,6 @@
 window.onload = function(){
     let X1, X2;
-    let dataSet = [{ // root is ~33.1
+    let dataSet = [{
         h: 2,
         w: 1,
         e: 5.3,
@@ -25,6 +25,7 @@ window.onload = function(){
         w: 0.3,
         e: 4.8,
     },];
+    let dataSetNumber;
 
     function roundInt(integer){
         return (Math.round(integer * 10000) / 10000);
@@ -44,12 +45,54 @@ window.onload = function(){
         }
     }
 
+    function duhotFunc(start, end, h, w, e) {
+        let results = {
+            green: {},
+            center: {},
+            red: {}
+        };
+        let center;
+
+        let iterations = 50;
+
+        for(let i = 0; i < iterations; i++) {
+
+            center = (start + end) / 2;
+
+            if((f(h, w, center) - e) * (f(h, w, end) - e) <= 0){
+                start = center;
+            } else {
+                end = center;
+            }
+            
+        }
+        // return [start, center, end];
+
+        results.center.x = ((start + end) / 2);
+        results.center.y = (f(h, w, (start + end) / 2) - e);
+
+        if((f(h, w, (start + end) / 2) - e) * (f(h, w, end) - e) <= 0){
+            results.green.x = end;
+            results.green.y = f(h, w, end) - e;
+            results.red.x = start;
+            results.red.y = f(h, w, start) - e;
+        } else if((f(h, w, (start + end) / 2) - e) * (f(h, w, start) - e) <= 0) {
+            results.green.x = start;
+            results.green.y = f(h, w, start) - e;
+            results.red.x = end;
+            results.red.y = f(h, w, end) - e;
+        } else {
+            return false;
+        }
+        return results;
+    }
+
     function iteratorFunc(a, b, h, w, e) {
         let result = {
             start: {},
             end: {}
         };
-        let n = 0.0001;
+        let n = 0.00001;
 
         for (let i = a; i < b; i += n){
             let j = i;
@@ -65,9 +108,10 @@ window.onload = function(){
     }
 
     document.getElementById('drawIter').addEventListener('click', () => {
+        
         X1 = +document.getElementById('x1').value;
         X2 = +document.getElementById('x2').value;
-        let dataSetNumber;
+        
 
         for (let i = 1; i <= 6; i++){
             if (document.getElementById(`set${i}`).checked){
@@ -83,5 +127,16 @@ window.onload = function(){
         // console.log(f(dataSet[dataSetNumber].h, dataSet[dataSetNumber].w, root));
         console.table(results);
         console.log(`root: ${roundInt(root)}`);
+    });
+
+    document.getElementById('drawDuhot').addEventListener('click', () => {
+        
+        let result = duhotFunc(X1, X2, dataSet[dataSetNumber].h, dataSet[dataSetNumber].w, dataSet[dataSetNumber].e);
+        console.table(result);
+        let root = (result.green.x + result.center.x) / 2
+
+        console.log(`root: ${roundInt(root)}`);
+        
+        
     });
 };
