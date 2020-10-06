@@ -136,8 +136,10 @@ window.onload = function() {
         let errorsField = document.getElementById('mainErrors');
 
         errorsField.textContent = '';
+        errorsField.className = '';
         if (x1 >= x2) {
-            errorsField.append('X1 >= X2');
+            errorsField.className = 'error';
+            errorsField.textContent = 'X1 >= X2';
             return false;
         }
         
@@ -206,7 +208,7 @@ window.onload = function() {
 
         if (step <= 0) {
             errorsField.className = 'error';
-            errorsField.append('negative step');
+            errorsField.textContent = 'negative step';
             return false;
         }
 
@@ -216,12 +218,12 @@ window.onload = function() {
         
         if(!results) {
             errorsField.className = 'warning';
-            errorsField.append('no roots');
+            errorsField.textContent = 'no roots';
             return false;
         }
 
         errorsField.className = 'success';
-        errorsField.append(`root is: ~${+((results.start.x + results.end.x) / 2).toFixed(4)}`);
+        errorsField.textContent = `root is: ~${+((results.start.x + results.end.x) / 2).toFixed(4)}`;
 
         let data = {
             labels: getArrayRange(x1, x2, step),
@@ -301,10 +303,11 @@ window.onload = function() {
         let errorsField = document.getElementById('duhotErrors');
 
         errorsField.textContent = '';
+        errorsField.className = '';
 
         if (numberOfIters < 0) {
             errorsField.className = 'error';
-            errorsField.append('negative iterator counter');
+            errorsField.textContent = 'negative iterator counter';
             return false;
         }
 
@@ -312,12 +315,12 @@ window.onload = function() {
 
         if(!results) {
             errorsField.className = 'warning';
-            errorsField.append('no roots');
+            errorsField.textContent = 'no roots';
             return false;
         }
 
         errorsField.className = 'success';
-        errorsField.append(`root is: ~${+((results.green.x + results.center.x) / 2).toFixed(4)}`);
+        errorsField.textContent = `root is: ~${+((results.green.x + results.center.x) / 2).toFixed(4)}`;
 
         const ctx = document.getElementById('duhot').getContext('2d');
 
