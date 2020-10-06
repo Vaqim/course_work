@@ -53,15 +53,13 @@ window.onload = function(){
         }
     }
 
-    function duhotFunc(start, end, h, w, e) {
+    function duhotFunc(start, end, h, w, e, iterations) {
         let results = {
             green: {},
             center: {},
             red: {}
         };
         let center;
-
-        let iterations = 80;
 
         for(let i = 0; i < iterations; i++) {
 
@@ -119,7 +117,14 @@ window.onload = function(){
         
         X1 = +document.getElementById('x1').value;
         X2 = +document.getElementById('x2').value;
-        
+        let alertField = document.getElementById('iterAlertField');
+        alertField.textContent = '';
+
+        if (X1 >= X2) {
+            alertField.className = 'error';
+            alertField.textContent = 'Не корректний проміжок';
+            return false;
+        }
 
         for (let i = 1; i <= 6; i++){
             if (document.getElementById(`set${i}`).checked){
@@ -127,14 +132,16 @@ window.onload = function(){
                 break;
             }
         }
-        console.table(dataSet[dataSetNumber]);
         
         let results = iteratorFunc(X1, X2, dataSet[dataSetNumber].h, dataSet[dataSetNumber].w, dataSet[dataSetNumber].e);
-        if (!results) return;
+        if (!results){
+            alertField.className = 'warning';
+            alertField.textContent = 'Коренів не знайдено';
+            return false;
+        }
         let root = (results.end.y + results.start.y) / 2;
-        // console.log(f(dataSet[dataSetNumber].h, dataSet[dataSetNumber].w, root));
-        console.table(results);
-        console.log(`root: ${roundInt(root)}`);
+        alertField.className = 'success';
+        alertField.textContent = `Корінь: ${roundInt(root)}`;
 
         const ctx = document.getElementById('iter').getContext('2d');
 
@@ -207,12 +214,27 @@ window.onload = function(){
 
     document.getElementById('drawDuhot').addEventListener('click', () => {
         
-        let results = duhotFunc(X1, X2, dataSet[dataSetNumber].h, dataSet[dataSetNumber].w, dataSet[dataSetNumber].e);
-        console.table(results);
-        if(!results) return;
-        let root = results.green.x;
+        const iters = +document.getElementById('duhotIters').value;
+        let alertField = document.getElementById('duhotAlertField');
+        alertField.textContent = '';
+        alertField.className = '';
 
-        console.log(`root: ${roundInt(root)}`);
+        if(iters <= 0) {
+            alertField.className = 'error';
+            alertField.textContent = 'Не корректна кількість ітерацій'
+            return false;
+        }
+
+        let results = duhotFunc(X1, X2, dataSet[dataSetNumber].h, dataSet[dataSetNumber].w, dataSet[dataSetNumber].e, iters);
+
+        if(!results) {
+            alertField.className = 'warning';
+            alertField.textContent = 'Немає коренів';
+            return false;
+        }
+        alertField.className = 'success';
+        let root = (results.green.x + results.center.x) / 2;
+        alertField.textContent = `Корінь: ${roundInt(root)}`;
 
         const ctx = document.getElementById('duhot').getContext('2d');
 
