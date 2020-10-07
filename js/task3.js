@@ -82,6 +82,38 @@ window.onload = () => {
         return area * height;
     }
 
+    function simpsonDraw(min, max, iters){
+        let d = (max - min) / iters;
+        let start = min;
+        let dataSet = {
+            label: "", // Name it as you want
+            function: ()=>{},
+            data: [], // Don't forget to add an empty data array, or else it will break
+            borderColor: "green",
+            fill: true,
+            radius: 3,
+            order: 0,
+            backgroundColor: 'rgba(117, 190, 218, 0.5)'
+        };
+
+        
+        for (let i = 0; i < iters; i++){
+            let end = start + d;
+            
+            dataSet.data.push({
+                x: +start.toFixed(2),
+                y: +f(start).toFixed(2)
+            });
+            start = end;
+        }
+        dataSet.data.push({
+            x: +start.toFixed(2),
+            y: +f(start).toFixed(2)
+        });
+
+        return dataSet;
+    }
+
     function simpson(min, max, iters){
         let height = (max - min) / iters;
         let area = (f(min) + f(max)) / 2 + 2 * f(min + height / 2);
@@ -284,9 +316,9 @@ window.onload = () => {
                 order: 1
             }]
         }
-        
-        const root = trapezoid(x1, x2, iters);
-        const result = trapDraw(x1, x2, iters);
+
+        const root = simpson(x1, x2, iters);
+        const result = simpsonDraw(x1, x2, iters);
 
         data.datasets = data.datasets.concat(result);
 
