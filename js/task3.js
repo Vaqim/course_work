@@ -149,8 +149,9 @@ window.onload = () => {
                     }], // Don't forget to add an empty data array, or else it will break
                     borderColor: "green",
                     fill: false,
-                    radius: 3,
-                    borderWidth: 2,
+                    radius: 2,
+                    borderWidth: 4,
+                    order: 0
                 });
                 continue;
             }
@@ -163,8 +164,9 @@ window.onload = () => {
                 }], // Don't forget to add an empty data array, or else it will break
                 borderColor: "black",
                 fill: false,
-                radius: 3,
-                borderWidth: 2,
+                radius: 2,
+                borderWidth: 4,
+                order: 0
             });
 
         }
@@ -183,6 +185,15 @@ window.onload = () => {
     document.getElementById('drawMain').addEventListener('click', () => {
         const x1 = +document.getElementById('x1').value;
         const x2 = +document.getElementById('x2').value;
+        let alerts = document.getElementById('mainAlertField');
+        alerts.textContent = '';
+        alerts.className = '';
+
+        if(x1 >= x2) {
+            alerts.textContent = 'X1 >= X2';
+            alerts.className = 'error';
+            return false;
+        }
 
         const ctx = document.getElementById('main').getContext('2d');
 
@@ -217,6 +228,23 @@ window.onload = () => {
         const x1 = +document.getElementById('x1').value;
         const x2 = +document.getElementById('x2').value;
         const iters = +document.getElementById('rectangleIters').value;
+
+        let alerts = document.getElementById('rectangleAlertField');
+        alerts.textContent = '';
+        alerts.className = '';
+
+        if(x1 >= x2) {
+            alerts.textContent = 'X1 >= X2';
+            alerts.className = 'error';
+            return false;
+        }
+
+        if (iters <= 0){
+            alerts.textContent = 'Не вірна кількість ітерацій';
+            alerts.className = 'error';
+            return false;
+        }
+
         const ctx = document.getElementById('rectangle').getContext('2d');
 
         let data = {
@@ -232,9 +260,12 @@ window.onload = () => {
             }]
         }
 
-        const [result, root] = rectangle(x1, x2, iters);
+        const [result, area] = rectangle(x1, x2, iters);
         data.datasets = data.datasets.concat(result);
 
+        alerts.textContent = `Площа криволінійної трапеції: ${area.toFixed(4)}`;
+        alerts.className = 'success';
+            
         let myBarChart = new Chart(ctx, {
             type: 'line',
             data: data,
@@ -260,6 +291,21 @@ window.onload = () => {
         const iters = +document.getElementById('trapIters').value;
         const ctx = document.getElementById('trap').getContext('2d');
 
+        let alerts = document.getElementById('trapAlertField');
+        alerts.textContent = '';
+        alerts.className = '';
+
+        if(x1 >= x2) {
+            alerts.textContent = 'X1 >= X2';
+            alerts.className = 'error';
+            return false;
+        }
+
+        if (iters <= 0){
+            alerts.textContent = 'Не вірна кількість ітерацій';
+            alerts.className = 'error';
+            return false;
+        }
 
         let data = {
             labels: getArrayRange(x1, x2, 0.01),
@@ -273,12 +319,13 @@ window.onload = () => {
                 order: 1
             }]
         }
-        const root = trapezoid(x1, x2, iters);
+        const area = trapezoid(x1, x2, iters);
         const result = trapDraw(x1, x2, iters);
-        console.log(result);
-        console.log(data.datasets);
+
         data.datasets = data.datasets.concat(result);
-        console.log(data.datasets);
+
+        alerts.className = 'success';
+        alerts.textContent = `Площа криволінійної трапеції: ${area.toFixed(4)}`;
 
         let myBarChart = new Chart(ctx, {
             type: 'line',
@@ -304,6 +351,22 @@ window.onload = () => {
         const iters = +document.getElementById('simpsonIters').value;
         const ctx = document.getElementById('simpson').getContext('2d');
 
+        let alerts = document.getElementById('simpsonAlertField');
+        alerts.textContent = '';
+        alerts.className = '';
+
+        if(x1 >= x2) {
+            alerts.textContent = 'X1 >= X2';
+            alerts.className = 'error';
+            return false;
+        }
+
+        if (iters <= 0){
+            alerts.textContent = 'Не вірна кількість ітерацій';
+            alerts.className = 'error';
+            return false;
+        }
+
         let data = {
             labels: getArrayRange(x1, x2, 0.01),
             datasets: [{
@@ -317,10 +380,13 @@ window.onload = () => {
             }]
         }
 
-        const root = simpson(x1, x2, iters);
+        const area = simpson(x1, x2, iters);
         const result = simpsonDraw(x1, x2, iters);
 
         data.datasets = data.datasets.concat(result);
+
+        alerts.className = 'success';
+        alerts.textContent = `Площа криволінійної трапеції: ${area.toFixed(4)}`;
 
         let myBarChart = new Chart(ctx, {
             type: 'line',
@@ -345,11 +411,26 @@ window.onload = () => {
         const x2 = +document.getElementById('x2').value;
         const dots = +document.getElementById('amountOfDots').value;
 
+        let alerts = document.getElementById('montecarloAlertField');
+        alerts.textContent = '';
+        alerts.className = '';
+
+        if(x1 >= x2) {
+            alerts.textContent = 'X1 >= X2';
+            alerts.className = 'error';
+            return false;
+        }
+
+        if (dots <= 0){
+            alerts.textContent = 'Не вірна кількість точок';
+            alerts.className = 'error';
+            return false;
+        }
+
         const ctx = document.getElementById('montecarlo').getContext('2d');
 
-        const [dataSet, root] = monteCarlo(x1, x2, dots);
+        const [dataSet, area] = monteCarlo(x1, x2, dots);
         console.table(dataSet);
-        
 
         let data = {
             labels: getArrayRange(x1, x2, 0.01),
@@ -359,11 +440,15 @@ window.onload = () => {
                 data: [], // Don't forget to add an empty data array, or else it will break
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
-                radius: 0
+                radius: 0,
+                order: 1
             }]
         }
         console.log(dataSet);
         data.datasets = data.datasets.concat(dataSet);
+
+        alerts.className = 'success';
+        alerts.textContent = `Площа криволінійної трапеції: ${area.toFixed(4)}`;
 
         let myBarChart = new Chart(ctx, {
             type: 'line',
@@ -379,6 +464,7 @@ window.onload = () => {
                 legend: {
                     display: false
                 },
+                
             }
         });
     });
