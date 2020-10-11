@@ -102,8 +102,7 @@ window.onload = function() {
                 borderWidth: 2,
                 order: 0,
                 fill: false,
-                radius: 0,
-                order: 0
+                radius: 0
             }, {
                 label: '', // Name it as you want
                 function: () => {},
@@ -120,8 +119,7 @@ window.onload = function() {
                 borderWidth: 2,
                 order: 0,
                 fill: false,
-                radius: 0,
-                order: 0
+                radius: 0
             });
         }
         result.push(+end.toFixed(4));
