@@ -1,5 +1,7 @@
 window.onload = function() {
     
+    let x1, x2;
+
     function f(x) {
         //return Math.pow(x, 2) - Math.log(x);
         return Math.pow(x, 2) - Math.cos(x);
@@ -17,7 +19,6 @@ window.onload = function() {
         };
 
         for (let i = a; i < b; i += n){
-
             let j = +i.toFixed(4);
             if (f(j) === 0 || f(j) * f(j + n) < 0) {
                 result.start.x = j;
@@ -39,7 +40,6 @@ window.onload = function() {
         let center;
 
         for(let i = 1; i < iterations; i++) {
-
             center = (start + end) / 2;
 
             if(f(center) * f(end) <= 0){
@@ -88,7 +88,7 @@ window.onload = function() {
             if (end < start) return false;
 
             result.push({
-                label: `дотична ${counter}`, // Name it as you want
+                label: '',
                 function: () => {},
                 data: [{
                     x: +(buffer).toFixed(2),
@@ -97,14 +97,14 @@ window.onload = function() {
                 {
                     x: +(end).toFixed(2),
                     y: 0
-                }], // Don't forget to add an empty data array, or else it will break
+                }],
                 borderColor: "red",
                 borderWidth: 2,
                 order: 0,
                 fill: false,
                 radius: 0
             }, {
-                label: '', // Name it as you want
+                label: '',
                 function: () => {},
                 data: [
                 {
@@ -114,7 +114,7 @@ window.onload = function() {
                 {
                     x: +(end).toFixed(2),
                     y: +(f(end).toFixed(2))
-                }], // Don't forget to add an empty data array, or else it will break
+                }],
                 borderColor: "green",
                 borderWidth: 2,
                 order: 0,
@@ -129,8 +129,8 @@ window.onload = function() {
 
     document.getElementById('drawMain').addEventListener('click', () => {
 
-        let x1 = +document.getElementById('x1Main').value || 0;
-        let x2 = +document.getElementById('x2Main').value || 0;
+        x1 = +document.getElementById('x1Main').value || 0;
+        x2 = +document.getElementById('x2Main').value || 0;
         let errorsField = document.getElementById('mainErrors');
 
         errorsField.textContent = '';
@@ -155,28 +155,6 @@ window.onload = function() {
             }]
         }
 
-        Chart.pluginService.register({
-            beforeInit: function(chart) {
-                // We get the chart data
-                let data = chart.config.data;
-        
-                // For every dataset ...
-                for (let i = 0; i < data.datasets.length; i++) {
-        
-                    // For every label ...
-                    for (let j = 0; j < data.labels.length; j++) {
-        
-                        // We get the dataset's function and calculate the value
-                        let fct = data.datasets[i].function,
-                            x = data.labels[j],
-                            y = fct(x);
-                        // Then we add the value to the dataset data
-                        data.datasets[i].data.push(y);
-                    }
-                }
-            }
-        });
-
         let myBarChart = new Chart(ctx, {
             type: 'line',
             data: data,
@@ -194,12 +172,7 @@ window.onload = function() {
     });
 
     document.getElementById('drawIter').addEventListener('click', () => {
-
-        let x1 = +document.getElementById('x1Main').value || 0;
-        let x2 = +document.getElementById('x2Main').value || 0;
-
         let step = +document.getElementById('stepIter').value || 0.3;
-
         let errorsField = document.getElementById('iterErrors');
 
         errorsField.textContent = '';
@@ -216,26 +189,26 @@ window.onload = function() {
         
         if(!results) {
             errorsField.className = 'warning';
-            errorsField.textContent = 'no roots';
+            errorsField.textContent = 'Немає кореня на проміжку';
             return false;
         }
 
         errorsField.className = 'success';
-        errorsField.textContent = `root is: ~${+((results.start.x + results.end.x) / 2).toFixed(4)}`;
+        errorsField.textContent = `Корінь: ~${+((results.start.x + results.end.x) / 2).toFixed(4)}`;
 
         let data = {
             labels: getArrayRange(x1, x2, step),
             datasets: [{
-                label: "f(x) ", // Name it as you want
+                label: "f(x) ",
                 function: f,
-                data: [], // Don't forget to add an empty data array, or else it will break
+                data: [],
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
                 radius: 0,
                 order: 1
             },
             {
-                label: "Корінь", // Name it as you want
+                label: "Корінь",
                 function: () => {},
                 data: [{
                     x: +(results.start.x).toFixed(2),
@@ -244,7 +217,7 @@ window.onload = function() {
                 {
                     x: +(results.end.x).toFixed(2),
                     y: +(results.end.y).toFixed(2)
-                }], // Don't forget to add an empty data array, or else it will break
+                }], 
                 borderColor: "green",
                 borderWidth: 5,
                 order: 0,
@@ -252,28 +225,6 @@ window.onload = function() {
                 radius: 0
             }]
         }
-
-        Chart.pluginService.register({
-            beforeInit: function(chart) {
-                // We get the chart data
-                let data = chart.config.data;
-        
-                // For every dataset ...
-                for (let i = 0; i < data.datasets.length; i++) {
-        
-                    // For every label ...
-                    for (let j = 0; j < data.labels.length; j++) {
-        
-                        // We get the dataset's function and calculate the value
-                        let fct = data.datasets[i].function,
-                            x = data.labels[j],
-                            y = fct(x);
-                        // Then we add the value to the dataset data
-                        data.datasets[i].data.push(y);
-                    }
-                }
-            }
-        });
 
         let myChart = new Chart(ctx, {
             type: 'line',
@@ -292,10 +243,6 @@ window.onload = function() {
     });
 
     document.getElementById('drawDuhot').addEventListener('click', () => {
-
-        let x1 = +document.getElementById('x1Main').value || 0;
-        let x2 = +document.getElementById('x2Main').value || 0;
-
         let numberOfIters = document.getElementById('numberOfItersDuhot').value || 3;
 
         let errorsField = document.getElementById('duhotErrors');
@@ -305,7 +252,7 @@ window.onload = function() {
 
         if (numberOfIters < 0) {
             errorsField.className = 'error';
-            errorsField.textContent = 'negative iterator counter';
+            errorsField.textContent = 'невірна кількість ітерацій';
             return false;
         }
 
@@ -313,12 +260,12 @@ window.onload = function() {
 
         if(!results) {
             errorsField.className = 'warning';
-            errorsField.textContent = 'no roots';
+            errorsField.textContent = 'Немає кореня на проміжку';
             return false;
         }
 
         errorsField.className = 'success';
-        errorsField.textContent = `root is: ~${+((results.green.x + results.center.x) / 2).toFixed(4)}`;
+        errorsField.textContent = `Корінь: ~${+((results.green.x + results.center.x) / 2).toFixed(4)}`;
 
         const ctx = document.getElementById('duhot').getContext('2d');
 
@@ -348,7 +295,6 @@ window.onload = function() {
                 order: 0,
                 fill: false,
                 radius: 0,
-                order: 0
             },{
                 label: "Не корінь", // Name it as you want
                 function: () => {},
@@ -365,31 +311,8 @@ window.onload = function() {
                 order: 0,
                 fill: false,
                 radius: 0,
-                order: 0
             }]
         }
-
-        Chart.pluginService.register({
-            beforeInit: function(chart) {
-                // We get the chart data
-                let data = chart.config.data;
-        
-                // For every dataset ...
-                for (let i = 0; i < data.datasets.length; i++) {
-        
-                    // For every label ...
-                    for (let j = 0; j < data.labels.length; j++) {
-        
-                        // We get the dataset's function and calculate the value
-                        let fct = data.datasets[i].function,
-                            x = data.labels[j],
-                            y = fct(x);
-                        // Then we add the value to the dataset data
-                        data.datasets[i].data.push(y);
-                    }
-                }
-            }
-        });
 
         let myBarChart = new Chart(ctx, {
             type: 'line',
@@ -410,10 +333,6 @@ window.onload = function() {
     })
 
     document.getElementById('drawNewton').addEventListener('click', () => {
-
-        let x1 = +document.getElementById('x1Main').value || 0;
-        let x2 = +document.getElementById('x2Main').value || 0;
-
         let step = +document.getElementById('newtonStep').value || 0.04;
 
         let errorsField = document.getElementById('newtonErrors');
@@ -422,7 +341,7 @@ window.onload = function() {
 
         if (step < 0) {
             errorsField.className = 'error';
-            errorsField.append('negative step');
+            errorsField.textContent = 'Невірне значення кроку';
             return false;
         }
 
@@ -431,9 +350,9 @@ window.onload = function() {
         let data = {
             labels: getArrayRange(x1, x2, 0.01),
             datasets: [{
-                label: "f(x) ", // Name it as you want
+                label: "f(x) ",
                 function: f,
-                data: [], // Don't forget to add an empty data array, or else it will break
+                data: [],
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
                 radius: 0,
@@ -445,36 +364,14 @@ window.onload = function() {
 
         if(!results){
             errorsField.className = 'warning';
-            errorsField.append('no roots');
+            errorsField.textContent = 'Немає кореня на проміжку';
             return false;
         }
 
         errorsField.className = 'success';
-        errorsField.append(`root is: ${results.pop()}`);
+        errorsField.textContent = `Корінь: ${results.pop()}`;
 
         data.datasets = data.datasets.concat(results);
-
-        Chart.pluginService.register({
-            beforeInit: function(chart) {
-                // We get the chart data
-                let data = chart.config.data;
-        
-                // For every dataset ...
-                for (let i = 0; i < data.datasets.length; i++) {
-        
-                    // For every label ...
-                    for (let j = 0; j < data.labels.length; j++) {
-        
-                        // We get the dataset's function and calculate the value
-                        let fct = data.datasets[i].function,
-                            x = data.labels[j],
-                            y = fct(x);
-                        // Then we add the value to the dataset data
-                        data.datasets[i].data.push(y);
-                    }
-                }
-            }
-        });
 
         let myBarChart = new Chart(ctx, {
             type: 'line',
@@ -486,8 +383,33 @@ window.onload = function() {
                             beginAtZero: true
                         }
                     }]
+                },
+                legend: {
+                    display: false
                 }
             }
         });
+    });
+
+    Chart.pluginService.register({
+        beforeInit: function(chart) {
+            // We get the chart data
+            let data = chart.config.data;
+    
+            // For every dataset ...
+            for (let i = 0; i < data.datasets.length; i++) {
+    
+                // For every label ...
+                for (let j = 0; j < data.labels.length; j++) {
+    
+                    // We get the dataset's function and calculate the value
+                    let fct = data.datasets[i].function,
+                        x = data.labels[j],
+                        y = fct(x);
+                    // Then we add the value to the dataset data
+                    data.datasets[i].data.push(y);
+                }
+            }
+        }
     });
 }

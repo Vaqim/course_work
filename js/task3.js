@@ -1,4 +1,7 @@
 window.onload = () => {
+
+    let x1, x2;
+
     function f(x){
         return 1 + Math.pow(Math.E, -x);
         // return Math.sin(x)/(1 + Math.pow(x, 2));
@@ -20,7 +23,7 @@ window.onload = () => {
         for (let i = 0; i < iters; i++){
             let end = start + d;
             dataSets.push({
-                label: "", // Name it as you want
+                label: "",
                 function: ()=>{},
                 data: [{
                     x: +start.toFixed(2),
@@ -28,12 +31,12 @@ window.onload = () => {
                 },{
                     x: +end.toFixed(2),
                     y: +f(end).toFixed(2)
-                }], // Don't forget to add an empty data array, or else it will break
+                }],
                 borderColor: "green",
                 fill: true,
                 radius: 0,
                 order: 0,
-                backgroundColor: 'rgba(117, 190, 218, 0.5)'
+                backgroundColor: 'rgba(117, 190, 218, 0.7)'
             })
             start = end;
         }
@@ -52,7 +55,7 @@ window.onload = () => {
             area += d * f(mid);
             
             dataSets.push({
-                label: "", // Name it as you want
+                label: "",
                 function: ()=>{},
                 data: [{
                     x: +start.toFixed(2),
@@ -60,12 +63,12 @@ window.onload = () => {
                 },{
                     x: +end.toFixed(2),
                     y: +f((start + end) / 2).toFixed(2)
-                }], // Don't forget to add an empty data array, or else it will break
+                }],
                 borderColor: "green",
                 fill: true,
                 radius: 0,
                 order: 0,
-                backgroundColor: 'rgba(117, 190, 218, 0.5)'
+                backgroundColor: 'rgba(117, 190, 218, 0.7)'
             })
             start = end;
         }
@@ -86,17 +89,16 @@ window.onload = () => {
         let d = (max - min) / iters;
         let start = min;
         let dataSet = {
-            label: "", // Name it as you want
+            label: "",
             function: ()=>{},
-            data: [], // Don't forget to add an empty data array, or else it will break
+            data: [], 
             borderColor: "green",
             fill: true,
             radius: 3,
             order: 0,
-            backgroundColor: 'rgba(117, 190, 218, 0.5)'
+            backgroundColor: 'rgba(117, 190, 218, 0.6)'
         };
 
-        
         for (let i = 0; i < iters; i++){
             let end = start + d;
             
@@ -141,12 +143,12 @@ window.onload = () => {
             if(f(x) >= y) {
                 goodDots++;
                 dotsDatasets.push({
-                    label: "", // Name it as you want
+                    label: "",
                     function: function(){},
                     data: [{
                         x: +x.toFixed(2),
                         y: +y.toFixed(2)
-                    }], // Don't forget to add an empty data array, or else it will break
+                    }],
                     borderColor: "green",
                     fill: false,
                     radius: 2,
@@ -156,12 +158,12 @@ window.onload = () => {
                 continue;
             }
             dotsDatasets.push({
-                label: "", // Name it as you want
+                label: "",
                 function: function(){},
                 data: [{
                     x: +x.toFixed(2),
                     y: +y.toFixed(2)
-                }], // Don't forget to add an empty data array, or else it will break
+                }],
                 borderColor: "black",
                 fill: false,
                 radius: 2,
@@ -172,19 +174,10 @@ window.onload = () => {
         }
         return [dotsDatasets, (goodDots / dots) * area];
     }
-    /*
-    console.log('rectangle ', rectangle(0, 5, 1000));
-
-    console.log('trap ', trapezoid(0, 5, 1000));
-
-    console.log('simpson', simpson(0, 5, 1000));
-
-    console.log('monte Carlo', monteCarlo(0, 5, 20));
-    */
 
     document.getElementById('drawMain').addEventListener('click', () => {
-        const x1 = +document.getElementById('x1').value;
-        const x2 = +document.getElementById('x2').value;
+        x1 = +document.getElementById('x1').value;
+        x2 = +document.getElementById('x2').value;
         let alerts = document.getElementById('mainAlertField');
         alerts.textContent = '';
         alerts.className = '';
@@ -200,9 +193,9 @@ window.onload = () => {
         let data = {
             labels: getArrayRange(x1, x2, 0.1),
             datasets: [{
-                label: "f(x) ", // Name it as you want
+                label: "f(x) ",
                 function: f,
-                data: [], // Don't forget to add an empty data array, or else it will break
+                data: [],
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
                 radius: 0
@@ -225,11 +218,9 @@ window.onload = () => {
     });
 
     document.getElementById('drawRectangle').addEventListener('click', () => {
-        const x1 = +document.getElementById('x1').value;
-        const x2 = +document.getElementById('x2').value;
         const iters = +document.getElementById('rectangleIters').value;
-
         let alerts = document.getElementById('rectangleAlertField');
+
         alerts.textContent = '';
         alerts.className = '';
 
@@ -250,9 +241,9 @@ window.onload = () => {
         let data = {
             labels: getArrayRange(x1, x2, 0.01),
             datasets: [{
-                label: "f(x) ", // Name it as you want
+                label: "f(x) ",
                 function: f,
-                data: [], // Don't forget to add an empty data array, or else it will break
+                data: [],
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
                 radius: 0,
@@ -286,8 +277,6 @@ window.onload = () => {
     });
 
     document.getElementById('drawTrap').addEventListener('click', () => {
-        const x1 = +document.getElementById('x1').value;
-        const x2 = +document.getElementById('x2').value;
         const iters = +document.getElementById('trapIters').value;
         const ctx = document.getElementById('trap').getContext('2d');
 
@@ -310,9 +299,9 @@ window.onload = () => {
         let data = {
             labels: getArrayRange(x1, x2, 0.01),
             datasets: [{
-                label: "f(x) ", // Name it as you want
+                label: "f(x) ",
                 function: f,
-                data: [], // Don't forget to add an empty data array, or else it will break
+                data: [],
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
                 radius: 0,
@@ -346,8 +335,6 @@ window.onload = () => {
     });
 
     document.getElementById('drawSimpson').addEventListener('click', () => {
-        const x1 = +document.getElementById('x1').value;
-        const x2 = +document.getElementById('x2').value;
         const iters = +document.getElementById('simpsonIters').value;
         const ctx = document.getElementById('simpson').getContext('2d');
 
@@ -370,9 +357,9 @@ window.onload = () => {
         let data = {
             labels: getArrayRange(x1, x2, 0.01),
             datasets: [{
-                label: "f(x) ", // Name it as you want
+                label: "f(x) ",
                 function: f,
-                data: [], // Don't forget to add an empty data array, or else it will break
+                data: [],
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
                 radius: 0,
@@ -407,8 +394,6 @@ window.onload = () => {
     });
 
     document.getElementById('drawMontecarlo').addEventListener('click', () => {
-        const x1 = +document.getElementById('x1').value;
-        const x2 = +document.getElementById('x2').value;
         const dots = +document.getElementById('amountOfDots').value;
 
         let alerts = document.getElementById('montecarloAlertField');
@@ -435,9 +420,9 @@ window.onload = () => {
         let data = {
             labels: getArrayRange(x1, x2, 0.01),
             datasets: [{
-                label: "f(x) ", // Name it as you want
+                label: "f(x) ",
                 function: f,
-                data: [], // Don't forget to add an empty data array, or else it will break
+                data: [],
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
                 radius: 0,
