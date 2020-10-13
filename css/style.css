@@ -93,7 +93,7 @@ button:active {
   margin: 0 auto;
 }
 
-input {
+input, select {
   padding: 0.5%;
   font-size: 15px;
   border-radius: 3px;
@@ -128,4 +128,8 @@ input {
 
 .form_radio_btn label:hover {
 	color: #666;
+}
+
+.left {
+  margin-right: 60px;
 }
