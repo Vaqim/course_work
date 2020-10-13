@@ -181,7 +181,14 @@ window.onload = function(){
                             beginAtZero: true
                         }
                     }]
-                }
+                },
+                animation: {
+                    duration: 0
+                },
+                hover: {
+                    animationDuration: 0
+                },
+                responsiveAnimationDuration: 0
             }
         });
     });
@@ -267,7 +274,15 @@ window.onload = function(){
                             beginAtZero: true
                         }
                     }]
-                }
+                },
+                animation: {
+                    duration: 0 // general animation time
+                },
+                hover: {
+                    animationDuration: 0 // duration of animations when hovering an item
+                },
+                responsiveAnimationDuration: 0
+            
             }
         });
         
