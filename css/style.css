@@ -39,7 +39,7 @@ article {
   display: flex;
   flex-direction: column;
   align-content: center;
-  width: 40%;
+  width: 70%;
   margin: 0 auto;
   padding: 50px;
   border-bottom-left-radius: 15px;
@@ -91,4 +91,12 @@ button:active {
   width: 35%;
   padding: 2%;
   margin: 0 auto;
+}
+
+input {
+  padding: 0.5%;
+  font-size: 15px;
+  border-radius: 3px;
+  border: solid 1px gray;
+  text-align: center;
 }
