@@ -15,52 +15,84 @@
         <a href="task3.html">Завдання 3</a>
         <a href="task4.html">Завдання 4</a>
     </nav>
-    
+
     <article>
-        <h2>Метод ітерацій:</h2>
+        <p>
+            <img src="img/2.1.jpg" alt="formula" width="878" height="514">
+        </p>
         <p>
             X1:
-            <input type="text" placeholder="X1" id="x1" value="0"><br><br>
+            <input type="text" placeholder="0" id="x1" value="0"><br><br>
             X2: 
-            <input type="text" placeholder="X2" id="x2" value="50">
+            <input type="text" placeholder="50" id="x2" value="50">
         </p>
-        <canvas id="iter" width="300" height="200"></canvas>
-        <div id="iterAlertField"></div>
-        <form>
-            <label for="set1"> Set #1</label>
-            <input type="radio" id="set1" value="1" name="set" checked><br>
-            <label for="set2"> Set #2</label>
-            <input type="radio" id="set2" value="2" name="set"><br>
-            <label for="set3"> Set #3</label>
-            <input type="radio" id="set3" value="3" name="set"><br>
-            <label for="set4"> Set #4</label>
-            <input type="radio" id="set4" value="4" name="set"><br>
-            <label for="set5"> Set #5</label>
-            <input type="radio" id="set5" value="5" name="set"><br>
-            <label for="set6"> Set #6</label>
-            <input type="radio" id="set6" value="6" name="set"><br>
-        </form>
+        <canvas id="main"></canvas>
+        <div id="mainAlertField"></div>
         <p>
-            <button id="drawIter">Намалювати графік</button>
-        </p>
-        <div id="mainErrors">
-
-        </div>
-
-    </article>
-    <article>
-        <h2>Метод Дихотомії</h2>
-        <canvas id="duhot" width="300" height="200"></canvas>
-        <div id="duhotAlertField"></div>
-        <p>
-            <input type="text" id="duhotIters" placeholder="30" value="30"><br><br>
-        
-            <button id="drawDuhot">Намалювати графік</button>
+            <button id="drawMain">Намалювати графік</button>
         </p>
     </article>
 
-    
+    <div id="setSection">
+        <article>
+            <p>Оберіть випадок: </p>
+            <p>
+                <div class="form_radio_btn">
+                    <input id="set1" type="radio" name="radio" value="1" checked>
+                    <label for="set1">h: 2, W: 1, e: 5.3</label>
+                </div>
+                <div class="form_radio_btn">
+                    <input id="set2" type="radio" name="radio" value="2" checked>
+                    <label for="set2">h: 0.5, W: 0.2, e: 4.8</label>
+                </div>
+                <div class="form_radio_btn">
+                    <input id="set3" type="radio" name="radio" value="3" checked>
+                    <label for="set3">h: 1, W: 0.3, e: 5.5</label>
+                </div>
+                <div class="form_radio_btn">
+                    <input id="set4" type="radio" name="radio" value="4" checked>
+                    <label for="set4">h: 0.5, W: 0.4, e: 3.5</label>
+                </div>
+                <div class="form_radio_btn">
+                    <input id="set5" type="radio" name="radio" value="5" checked>
+                    <label for="set5">h: 0.5, W: 0.1, e: 4.3</label>
+                </div>
+                <div class="form_radio_btn">
+                    <input id="set6" type="radio" name="radio" value="6" checked>
+                    <label for="set6">h: 1, W: 0.3, e: 4.8</label>
+                </div>
+            </p>
+            <p>
+                <button id="goToMethods">Відкрити методи</button>
+            </p>
+        </article>
+    </div>
 
-    
+    <div id="methodSection">
+        <article>
+            <h2>Метод ітерацій:</h2>
+            
+            <canvas id="iter" width="300" height="200"></canvas>
+            <p>
+                Крок:
+                <input type="text" id="iterStep" placeholder="0.01" value="0.01">
+            </p>
+            <div id="iterAlertField"></div>
+            <p>
+                <button id="drawIter">Намалювати графік</button>
+            </p>
+            <div id="mainErrors"></div>
+        </article>
+        <article>
+            <h2>Метод Дихотомії</h2>
+            <canvas id="duhot" width="300" height="200"></canvas>
+            <div id="duhotAlertField"></div>
+            <p>
+                <input type="text" id="duhotIters" placeholder="30" value="30"><br><br>
+            
+                <button id="drawDuhot">Намалювати графік</button>
+            </p>
+        </article>
+    </div>
 </body>
 </html>

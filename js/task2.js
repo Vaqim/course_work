@@ -27,6 +27,9 @@ window.onload = function(){
     },];
     let dataSetNumber;
 
+    document.getElementById('setSection').hidden = true;
+    document.getElementById('methodSection').hidden = true;
+
     function roundInt(integer){
         return (Math.round(integer * 10000) / 10000);
     }
@@ -89,12 +92,11 @@ window.onload = function(){
         return results;
     }
 
-    function iteratorFunc(a, b, h, w, e) {
+    function iteratorFunc(a, b, h, w, e, n) {
         let result = {
             start: {},
             end: {}
         };
-        let n = 0.0001;
 
         for (let i = a; i < b; i += n){
             let j = i;
@@ -109,11 +111,72 @@ window.onload = function(){
         return false;
     }
 
-    document.getElementById('drawIter').addEventListener('click', () => {
-        
+    document.getElementById('drawMain').addEventListener('click', () => {
         X1 = +document.getElementById('x1').value;
         X2 = +document.getElementById('x2').value;
+        let alertField = document.getElementById('mainAlertField');
+
+        alertField.textContent = '';
+        alertField.className = '';
+
+        for (let i = 1; i <= 6; i++){
+            if (document.getElementById(`set${i}`).checked){
+                dataSetNumber = +i - 1;
+                break;
+            }
+        }
+
+        if(X1 >= X2){
+            alertField.textContent = 'Невірний проміжок (X1 >= X2)';
+            alertField.className = 'error';
+            return false;
+        }
+
+        document.getElementById('setSection').hidden = false;
+
+        const ctx = document.getElementById('main').getContext('2d');
+
+        let data = {
+            labels: getArrayRange(X1, X2, 0.1),
+            datasets: [{
+                label: "f(x) ",
+                function: function(x) { return +f(dataSet[dataSetNumber].h, dataSet[dataSetNumber].w, x).toFixed(3) },
+                data: [],
+                borderColor: "rgba(75, 192, 192, 1)",
+                fill: false,
+                radius: 0
+            }]
+        }
+
+        let myChart = new Chart(ctx, {
+            type: 'line',
+            data: data,
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
+                animation: {
+                    duration: 0
+                },
+                hover: {
+                    animationDuration: 0
+                },
+                responsiveAnimationDuration: 0
+            }
+        });
+    });
+
+    document.getElementById('goToMethods').addEventListener('click', () => {
+        document.getElementById('methodSection').hidden = false;
+    });
+
+    document.getElementById('drawIter').addEventListener('click', () => {
         let alertField = document.getElementById('iterAlertField');
+        let step = +document.getElementById('iterStep').value;
         alertField.textContent = '';
 
         if (X1 >= X2) {
@@ -122,14 +185,13 @@ window.onload = function(){
             return false;
         }
 
-        for (let i = 1; i <= 6; i++){
-            if (document.getElementById(`set${i}`).checked){
-                dataSetNumber = +i - 1;
-                break;
-            }
+        if (step <= 0){
+            alertField.className = 'error';
+            alertField.textContent = 'Не вірний крок';
+            return false;
         }
         
-        let results = iteratorFunc(X1, X2, dataSet[dataSetNumber].h, dataSet[dataSetNumber].w, dataSet[dataSetNumber].e);
+        let results = iteratorFunc(X1, X2, dataSet[dataSetNumber].h, dataSet[dataSetNumber].w, dataSet[dataSetNumber].e, step);
         if (!results){
             alertField.className = 'warning';
             alertField.textContent = 'Коренів не знайдено';
@@ -276,10 +338,10 @@ window.onload = function(){
                     }]
                 },
                 animation: {
-                    duration: 0 // general animation time
+                    duration: 0
                 },
                 hover: {
-                    animationDuration: 0 // duration of animations when hovering an item
+                    animationDuration: 0
                 },
                 responsiveAnimationDuration: 0
             
