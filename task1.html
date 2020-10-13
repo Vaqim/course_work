@@ -20,71 +20,69 @@
         <h2>Завдання 1</h2>
         <p>
             Побудувати в математичному пакеті графік функції f(x) та приблизно визначити один із коренів рівняння. Розв’язати рівняння методами ітерацій, дихотомії, Ньютона з точністю ε=10^-4:
+            <br><img src="img/1.1.jpg" alt="first formula" height="34" width="184">
         </p>
+        
         <p> 
             X1: 
-            <input type="text" id="x1Main" placeholder="0" value="0"><br><br>
+            <input type="text" id="x1Main" placeholder="0" value="-3"><br><br>
             X2: 
-            <input type="text" id="x2Main" placeholder="0" value="3">
+            <input type="text" id="x2Main" placeholder="0" value="5">
         </p>
         <p>
             <button id="drawMain">Намалювати графік</button>
         </p>
-        <div id="mainErrors">
+        <div id="mainErrors"></div>
+        <canvas width="300" height="200" id="main"></canvas>
+    </article>
+    <div id="methods">
+        <article> <!-- iteration -->
+            <p>Метод ітерацій: </p>
+            <p>
+                <canvas width="300" height="200" id="iter"></canvas>
+            </p>
 
-        </div>
-        <canvas width="300" height="200" id="main">
+            <div id="iterErrors"></div>
             
-        </canvas>
-    </article>
+            <p>
+                Крок:
+                <input type="text" id="stepIter" placeholder="0.3" value="0.3">
+            </p>
+            <p>
+                <button id="drawIter">Намалювати графік</button>
+            </p>
+        </article>
 
-    <article> <!-- iteration -->
-        <p>Метод ітерацій: </p>
-        <p>
-            <canvas width="300" height="200" id="iter"></canvas>
-        </p>
+        <article> <!-- duhotomy -->
+            <p>Метод дихотомії</p>
+            <p>
+                <canvas width="300" height="200" id="duhot"></canvas>
+            </p>
+            <div id="duhotErrors"></div>
+            <p>
+                Кількість розбиттів:
+                <input type="text" id="numberOfItersDuhot" placeholder="4" value="4">
+            </p>
+            <p>
+                <button id="drawDuhot">Намалювати графік</button>
+            </p>
+        </article>
 
-        <div id="iterErrors"></div>
-        
-        <p>
-            Крок:
-            <input type="text" id="stepIter" placeholder="0.3" value="0.3">
-        </p>
-        <p>
-            <button id="drawIter">Намалювати графік</button>
-        </p>
-    </article>
-
-    <article> <!-- duhotomy -->
-        <p>Метод дихотомії</p>
-        <p>
-            <canvas width="300" height="200" id="duhot"></canvas>
-        </p>
-        <div id="duhotErrors"></div>
-        <p>
-            Кількість розбиттів:
-            <input type="text" id="numberOfItersDuhot" placeholder="3" value="3">
-        </p>
-        <p>
-            <button id="drawDuhot">Намалювати графік</button>
-        </p>
-    </article>
-
-    <article> <!-- newton -->
-        <p>Метод Н'ютона</p>
-        <p>
-            <canvas width="300" height="200" id="newton"></canvas>
-        </p>
-        <div id="newtonErrors"></div>
-        <p>
-            Точність:
-            <input type="text" id="newtonStep" placeholder="0.04" value="0.04">
-        </p>
-        <p>
-            <button id="drawNewton">Намалювати графік</button>
-        </p>
-    </article>
-    
+        <article> <!-- newton -->
+            <p>Метод Н'ютона</p>
+            <p>
+                <canvas width="300" height="200" id="newton"></canvas>
+            </p>
+            <div id="newtonErrors"></div>
+            <p>
+                Точність:
+                <input type="text" id="newtonStep" placeholder="0.01" value="0.01">
+            </p>
+            <p>
+                <button id="drawNewton">Намалювати графік</button>
+            </p>
+        </article>
+    </div>
 
     
 

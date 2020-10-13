@@ -1,15 +1,19 @@
 window.onload = function() {
+
+    document.getElementById('methods').hidden = true;
     
     let x1, x2;
-
+    // variant 16
     function f(x) {
         //return Math.pow(x, 2) - Math.log(x);
-        return Math.pow(x, 2) - Math.cos(x);
+        //return Math.pow(x, 2) - Math.cos(x);
+        return Math.pow(x, 2) * Math.atan(x) - 1; // *
     }
-
+    // variant 16
     function F(x) {
         //return 2 * x + (-1 / x);
-        return 2 * x + Math.sin(x);
+        //return 2 * x + Math.sin(x);
+        return ((1 * Math.pow(x, 2)) / (Math.pow(x, 2) + 1)) + 2 * x * Math.atan(x); // *
     }
 
     function iteratorFunc(a, b, n) {
@@ -128,27 +132,29 @@ window.onload = function() {
     }
 
     document.getElementById('drawMain').addEventListener('click', () => {
-
-        x1 = +document.getElementById('x1Main').value || 0;
-        x2 = +document.getElementById('x2Main').value || 0;
+        x1 = +document.getElementById('x1Main').value;
+        x2 = +document.getElementById('x2Main').value;
         let errorsField = document.getElementById('mainErrors');
 
         errorsField.textContent = '';
         errorsField.className = '';
+
         if (x1 >= x2) {
             errorsField.className = 'error';
             errorsField.textContent = 'X1 >= X2';
             return false;
         }
+
+        document.getElementById('methods').hidden = false;
         
         const ctx = document.getElementById('main').getContext('2d');
 
         let data = {
             labels: getArrayRange(x1, x2, 0.1),
             datasets: [{
-                label: "f(x) ", // Name it as you want
+                label: "f(x) ",
                 function: f,
-                data: [], // Don't forget to add an empty data array, or else it will break
+                data: [],
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
                 radius: 0
@@ -172,14 +178,14 @@ window.onload = function() {
     });
 
     document.getElementById('drawIter').addEventListener('click', () => {
-        let step = +document.getElementById('stepIter').value || 0.3;
+        let step = +document.getElementById('stepIter').value;
         let errorsField = document.getElementById('iterErrors');
 
         errorsField.textContent = '';
 
         if (step <= 0) {
             errorsField.className = 'error';
-            errorsField.textContent = 'negative step';
+            errorsField.textContent = 'Не вірний крок';
             return false;
         }
 
@@ -204,7 +210,7 @@ window.onload = function() {
                 data: [],
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
-                radius: 0,
+                radius: 1,
                 order: 1
             },
             {
@@ -221,8 +227,9 @@ window.onload = function() {
                 borderColor: "green",
                 borderWidth: 5,
                 order: 0,
-                fill: false,
-                radius: 0
+                fill: true,
+                radius: 1,
+                backgroundColor: 'rgba(0, 128, 0, 0.5)'
             }]
         }
 
@@ -243,14 +250,14 @@ window.onload = function() {
     });
 
     document.getElementById('drawDuhot').addEventListener('click', () => {
-        let numberOfIters = document.getElementById('numberOfItersDuhot').value || 3;
+        let numberOfIters = document.getElementById('numberOfItersDuhot').value;
 
         let errorsField = document.getElementById('duhotErrors');
 
         errorsField.textContent = '';
         errorsField.className = '';
 
-        if (numberOfIters < 0) {
+        if (numberOfIters <= 0) {
             errorsField.className = 'error';
             errorsField.textContent = 'невірна кількість ітерацій';
             return false;
@@ -272,15 +279,15 @@ window.onload = function() {
         let data = {
             labels: getArrayRange(x1, x2, 0.01),
             datasets: [{
-                label: "f(x) ", // Name it as you want
+                label: "f(x) ",
                 function: f,
-                data: [], // Don't forget to add an empty data array, or else it will break
+                data: [],
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
                 radius: 0,
-                order: 1
+                order: 2
             },{
-                label: "Корінь", // Name it as you want
+                label: "Корінь",
                 function: () => {},
                 data: [{
                     x: results.green.x,
@@ -289,14 +296,15 @@ window.onload = function() {
                 {
                     x: results.center.x,
                     y: results.center.y
-                }], // Don't forget to add an empty data array, or else it will break
+                }],
                 borderColor: "green",
                 borderWidth: 5,
                 order: 0,
-                fill: false,
-                radius: 0,
+                fill: true,
+                radius: 1,
+                backgroundColor: 'rgba(0, 128, 0, 0.5)'
             },{
-                label: "Не корінь", // Name it as you want
+                label: "Не корінь",
                 function: () => {},
                 data: [{
                     x: results.red.x,
@@ -305,12 +313,13 @@ window.onload = function() {
                 {
                     x: results.center.x,
                     y: results.center.y
-                }], // Don't forget to add an empty data array, or else it will break
+                }],
                 borderColor: "red",
                 borderWidth: 5,
-                order: 0,
-                fill: false,
-                radius: 0,
+                order: 1,
+                fill: true,
+                radius: 1,
+                backgroundColor: 'rgba(255, 0, 0, 0.5)'
             }]
         }
 
@@ -333,13 +342,13 @@ window.onload = function() {
     })
 
     document.getElementById('drawNewton').addEventListener('click', () => {
-        let step = +document.getElementById('newtonStep').value || 0.04;
+        let step = +document.getElementById('newtonStep').value;
 
         let errorsField = document.getElementById('newtonErrors');
 
         errorsField.textContent = '';
 
-        if (step < 0) {
+        if (step <= 0) {
             errorsField.className = 'error';
             errorsField.textContent = 'Невірне значення кроку';
             return false;
@@ -386,7 +395,14 @@ window.onload = function() {
                 },
                 legend: {
                     display: false
-                }
+                },
+                animation: {
+                    duration: 0
+                },
+                hover: {
+                    animationDuration: 0
+                },
+                responsiveAnimationDuration: 0
             }
         });
     });
