@@ -1,10 +1,21 @@
 window.onload = () => {
 
-    let x1, x2;
+    let X1, X2, Iters;
+    document.getElementById('methods').hidden = true;
 
     function f(x){
         return 1 + Math.pow(Math.E, -x);
-        // return Math.sin(x)/(1 + Math.pow(x, 2));
+    }
+
+    function F(x){
+        return x - Math.pow(Math.E, -x);
+    }
+
+    function analitical(start, end){
+        let result = F(end) - F(start);
+        //document.getElementById('analitical').className = 'success';
+        document.getElementById('analitical').innerHTML = `На проміжку [${start}, ${end}]<br>Площа криволінійної трапеції: ${result.toFixed(4)}`;
+        return;
     }
 
     function getArrayRange(start, end, step){
@@ -68,7 +79,7 @@ window.onload = () => {
                 fill: true,
                 radius: 0,
                 order: 0,
-                backgroundColor: 'rgba(117, 190, 218, 0.7)'
+                backgroundColor: 'rgba(117, 190, 218, 0.8)'
             })
             start = end;
         }
@@ -175,66 +186,37 @@ window.onload = () => {
         return [dotsDatasets, (goodDots / dots) * area];
     }
 
-    document.getElementById('drawMain').addEventListener('click', () => {
-        x1 = +document.getElementById('x1').value;
-        x2 = +document.getElementById('x2').value;
+    document.getElementById('main').addEventListener('click', () => {
+        X1 = +document.getElementById('x1').value;
+        X2 = +document.getElementById('x2').value;
+        Iters = +document.getElementById('numberOfIters').value;
+        
         let alerts = document.getElementById('mainAlertField');
+
         alerts.textContent = '';
         alerts.className = '';
 
-        if(x1 >= x2) {
+        console.log(analitical(X1, X2));
+
+        if(X1 >= X2) {
             alerts.textContent = 'X1 >= X2';
             alerts.className = 'error';
             return false;
         }
 
-        const ctx = document.getElementById('main').getContext('2d');
-
-        let data = {
-            labels: getArrayRange(x1, x2, 0.1),
-            datasets: [{
-                label: "f(x) ",
-                function: f,
-                data: [],
-                borderColor: "rgba(75, 192, 192, 1)",
-                fill: false,
-                radius: 0
-            }]
-        }
-
-        let myBarChart = new Chart(ctx, {
-            type: 'line',
-            data: data,
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
+        document.getElementById('methods').hidden = false;
+        drawRect(X1, X2, Iters);
+        drawTrap(X1, X2, Iters);
+        drawSim(X1, X2, Iters);
+        drawMontecarlo(X1, X2, Iters);
+        analitical(X1, X2);
     });
 
-    document.getElementById('drawRectangle').addEventListener('click', () => {
-        const iters = +document.getElementById('rectangleIters').value;
+    const drawRect = (x1, x2, iters) => {
         let alerts = document.getElementById('rectangleAlertField');
 
         alerts.textContent = '';
         alerts.className = '';
-
-        if(x1 >= x2) {
-            alerts.textContent = 'X1 >= X2';
-            alerts.className = 'error';
-            return false;
-        }
-
-        if (iters <= 0){
-            alerts.textContent = 'Не вірна кількість ітерацій';
-            alerts.className = 'error';
-            return false;
-        }
 
         const ctx = document.getElementById('rectangle').getContext('2d');
 
@@ -273,28 +255,14 @@ window.onload = () => {
                 },
             }
         });
-    
-    });
+    }
 
-    document.getElementById('drawTrap').addEventListener('click', () => {
-        const iters = +document.getElementById('trapIters').value;
+    const drawTrap = (x1, x2, iters) => {
         const ctx = document.getElementById('trap').getContext('2d');
 
         let alerts = document.getElementById('trapAlertField');
         alerts.textContent = '';
         alerts.className = '';
-
-        if(x1 >= x2) {
-            alerts.textContent = 'X1 >= X2';
-            alerts.className = 'error';
-            return false;
-        }
-
-        if (iters <= 0){
-            alerts.textContent = 'Не вірна кількість ітерацій';
-            alerts.className = 'error';
-            return false;
-        }
 
         let data = {
             labels: getArrayRange(x1, x2, 0.01),
@@ -332,27 +300,14 @@ window.onload = () => {
                 },
             }
         });
-    });
+    }
 
-    document.getElementById('drawSimpson').addEventListener('click', () => {
-        const iters = +document.getElementById('simpsonIters').value;
+    const drawSim = (x1, x2, iters) => {
         const ctx = document.getElementById('simpson').getContext('2d');
 
         let alerts = document.getElementById('simpsonAlertField');
         alerts.textContent = '';
         alerts.className = '';
-
-        if(x1 >= x2) {
-            alerts.textContent = 'X1 >= X2';
-            alerts.className = 'error';
-            return false;
-        }
-
-        if (iters <= 0){
-            alerts.textContent = 'Не вірна кількість ітерацій';
-            alerts.className = 'error';
-            return false;
-        }
 
         let data = {
             labels: getArrayRange(x1, x2, 0.01),
@@ -391,31 +346,16 @@ window.onload = () => {
                 },
             }
         });
-    });
+    }
 
-    document.getElementById('drawMontecarlo').addEventListener('click', () => {
-        const dots = +document.getElementById('amountOfDots').value;
-
+    const drawMontecarlo = (x1, x2, dots) => {
         let alerts = document.getElementById('montecarloAlertField');
         alerts.textContent = '';
         alerts.className = '';
 
-        if(x1 >= x2) {
-            alerts.textContent = 'X1 >= X2';
-            alerts.className = 'error';
-            return false;
-        }
-
-        if (dots <= 0){
-            alerts.textContent = 'Не вірна кількість точок';
-            alerts.className = 'error';
-            return false;
-        }
-
         const ctx = document.getElementById('montecarlo').getContext('2d');
 
         const [dataSet, area] = monteCarlo(x1, x2, dots);
-        console.table(dataSet);
 
         let data = {
             labels: getArrayRange(x1, x2, 0.01),
@@ -429,7 +369,7 @@ window.onload = () => {
                 order: 1
             }]
         }
-        console.log(dataSet);
+
         data.datasets = data.datasets.concat(dataSet);
 
         alerts.className = 'success';
@@ -458,7 +398,7 @@ window.onload = () => {
                 responsiveAnimationDuration: 0
             }
         });
-    });
+    }
 
     Chart.pluginService.register({
         beforeInit: function(chart) {

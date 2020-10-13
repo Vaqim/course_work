@@ -18,68 +18,63 @@
 
     <article>
         <p>
-            Графік:
-        </p>    
-        <canvas id="main" width="300" height="200"></canvas>
-        <div id="mainAlertField"></div>
+            <img src="img/3.1.jpg" alt="formula" height="204" width="891">
+        </p>
         <p>
             X1:
             <input type="text" id="x1" value="-1"><br><br>
             X2:
-            <input type="text" id="x2" value="8">
+            <input type="text" id="x2" value="8"><br><br>
+            Кількість ітерацій: 
+            <select name="select" id="numberOfIters">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+                <option value="1000">1000</option>
+            </select>
         </p>
+        
+        <div id="mainAlertField"></div>
         <p>
-            <button id="drawMain">Намалювати графік</button>
+            <button id="main">Порахувати площу</button>
         </p>
     </article>
 
-    <article>
-        <p>Метод прямокутників:</p>
-        <canvas id="rectangle" width="300" height="200"></canvas>
-        <div id="rectangleAlertField"></div>
-        <p>
-            <input type="text" id="rectangleIters" placeholder="Кількість ітерацій" value="10">
-        </p>
-        <p>
-            <button id="drawRectangle">Намалювати графік</button>
-        </p>
-    </article>
+    <div id="methods">
+        <article>
+            <p>
+                Аналітичний метод: <br>
+                <img src="img/3.2.jpg" alt="formula" width='105' height="27">
+            </p>
+            
+            <div id="analitical"></div>
+        </article>
 
-    <article>
-        <p>Метод трапецій:</p>
-        <canvas id="trap" width="300" height="200"></canvas>
-        <div id="trapAlertField"></div>
-        <p>
-            <input type="text" id="trapIters" placeholder="Кількість ітерацій" value="5">
-        </p>
-        <p>
-            <button id="drawTrap">Намалювати графік</button>
-        </p>
-    </article>
+        <article>
+            <p>Метод прямокутників:</p>
+            <canvas id="rectangle" width="300" height="200"></canvas>
+            <div id="rectangleAlertField"></div>
+        </article>
 
-    <article>
-        <p>Метод Симпсона:</p>
-        <canvas id="simpson" width="300" height="200"></canvas>
-        <div id="simpsonAlertField"></div>
-        <p>
-            <input type="text" id="simpsonIters" placeholder="Кількість ітерацій" value="5">
-        </p>
-        <p>
-            <button id="drawSimpson">Намалювати графік</button>
-        </p>
-    </article>
+        <article>
+            <p>Метод трапецій:</p>
+            <canvas id="trap" width="300" height="200"></canvas>
+            <div id="trapAlertField"></div>
+        </article>
 
-    <article>
-        <p>Метод Монте-Карло:</p>
-        <canvas id="montecarlo" width="300" height="200"></canvas>
-        <div id="montecarloAlertField"></div>
-        <p>
-            <input type="text" id="amountOfDots" placeholder="Кількість ітерацій" value="50">
-        </p>
-        <p>
-            <button id="drawMontecarlo">Намалювати графік</button>
-        </p>
-    </article>
+        <article>
+            <p>Метод Симпсона:</p>
+            <canvas id="simpson" width="300" height="200"></canvas>
+            <div id="simpsonAlertField"></div>
+        </article>
+
+        <article>
+            <p>Метод Монте-Карло:</p>
+            <canvas id="montecarlo" width="300" height="200"></canvas>
+            <div id="montecarloAlertField"></div>
+        </article>
+    </div>
     
 </body>
 </html>
