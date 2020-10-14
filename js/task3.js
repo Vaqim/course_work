@@ -1,7 +1,20 @@
 window.onload = () => {
 
     let X1, X2, Iters;
+    let iterations = [10, 20, 50, 100, 1000];
     document.getElementById('methods').hidden = true;
+    let a = 0.4;
+
+    function changeA(parameter){
+        if (parameter === 0.4){
+            a = 0.8;
+            return a;
+        }
+        if (parameter === 0.8){
+            a = 0.4;
+            return a;
+        }
+    }
 
     function f(x){
         return 1 + Math.pow(Math.E, -x);
@@ -13,9 +26,8 @@ window.onload = () => {
 
     function analitical(start, end){
         let result = F(end) - F(start);
-        //document.getElementById('analitical').className = 'success';
         document.getElementById('analitical').innerHTML = `На проміжку [${start}, ${end}]<br>Площа криволінійної трапеції: ${result.toFixed(4)}`;
-        return;
+        return result;
     }
 
     function getArrayRange(start, end, step){
@@ -45,13 +57,27 @@ window.onload = () => {
                 }],
                 borderColor: "green",
                 fill: true,
-                radius: 0,
+                radius: 3,
                 order: 0,
-                backgroundColor: 'rgba(117, 190, 218, 0.7)'
+                backgroundColor: `rgba(4, 99, 7, ${changeA(a)})`
             })
             start = end;
         }
         return dataSets;
+    }
+
+    function tRectangle(min, max, iters){
+        let area = 0;
+        let d = (max - min) / iters;
+        let start = min;
+        
+        for (let i = 0; i < iters; i++){
+            let end = start + d;
+            let mid = (start + end) / 2;
+            area += d * f(mid);
+            start = end;
+        }
+        return area;
     }
 
     function rectangle(min, max, iters){
@@ -79,7 +105,7 @@ window.onload = () => {
                 fill: true,
                 radius: 0,
                 order: 0,
-                backgroundColor: 'rgba(117, 190, 218, 0.8)'
+                backgroundColor: `rgba(4, 99, 7, ${changeA(a)})`
             })
             start = end;
         }
@@ -107,7 +133,7 @@ window.onload = () => {
             fill: true,
             radius: 3,
             order: 0,
-            backgroundColor: 'rgba(117, 190, 218, 0.6)'
+            backgroundColor: 'rgba(4, 99, 7, 0.6)'
         };
 
         for (let i = 0; i < iters; i++){
@@ -138,6 +164,24 @@ window.onload = () => {
 
     function getRandomArbitrary(min, max) {
         return Math.random() * (max - min) + min;
+    }
+
+    function tMonteCarlo(min, max, dots){
+        let goodDots = 0;
+        let yMin = 0;
+        let yMax = 4;
+
+        let area = (yMax - yMin) * (max - min);
+
+        for (let i = 0; i < dots; i++){
+            let x = getRandomArbitrary(min, max);
+            let y = getRandomArbitrary(yMin, yMax);
+            if(f(x) >= y) {
+                goodDots++;
+                continue;
+            }
+        }
+        return (goodDots / dots) * area;
     }
 
     function monteCarlo(min, max, dots){
@@ -203,13 +247,27 @@ window.onload = () => {
             alerts.className = 'error';
             return false;
         }
-
+        
         document.getElementById('methods').hidden = false;
+
+        document.getElementById('tAn').textContent = `${analitical(X1, X2).toFixed(4)}`;
+        for (iter of iterations){
+            document.getElementById(`tRect${iter}`).textContent = `${tRectangle(X1, X2, iter).toFixed(4)}`;
+            document.getElementById(`tTrap${iter}`).textContent = `${trapezoid(X1, X2, iter).toFixed(4)}`;
+            document.getElementById(`tSim${iter}`).textContent = `${simpson(X1, X2, iter).toFixed(4)}`;
+            document.getElementById(`tMonte${iter}`).textContent = `${tMonteCarlo(X1, X2, iter).toFixed(4)}`;
+        }
+
         drawRect(X1, X2, Iters);
         drawTrap(X1, X2, Iters);
         drawSim(X1, X2, Iters);
         drawMontecarlo(X1, X2, Iters);
-        analitical(X1, X2);
+    });
+
+    document.getElementById('refreshMonteCarlo').addEventListener('click', () => {
+        for (iter of iterations){
+            document.getElementById(`tMonte${iter}`).textContent = `${tMonteCarlo(X1, X2, iter).toFixed(4)}`;
+        }
     });
 
     const drawRect = (x1, x2, iters) => {
@@ -253,6 +311,13 @@ window.onload = () => {
                 legend: {
                     display: false
                 },
+                animation: {
+                    duration: 0
+                },
+                hover: {
+                    animationDuration: 0
+                },
+                responsiveAnimationDuration: 0
             }
         });
     }
@@ -298,6 +363,13 @@ window.onload = () => {
                 legend: {
                     display: false
                 },
+                animation: {
+                    duration: 0
+                },
+                hover: {
+                    animationDuration: 0
+                },
+                responsiveAnimationDuration: 0
             }
         });
     }
@@ -344,6 +416,13 @@ window.onload = () => {
                 legend: {
                     display: false
                 },
+                animation: {
+                    duration: 0
+                },
+                hover: {
+                    animationDuration: 0
+                },
+                responsiveAnimationDuration: 0
             }
         });
     }
