@@ -32,6 +32,7 @@
         <p>
             <button id="drawMain">Намалювати графік</button>
         </p>
+        <p id="amuontOfRoots"></p>
         <div id="mainErrors"></div>
         <canvas width="300" height="200" id="main"></canvas>
     </article>
@@ -41,6 +42,38 @@
             <p>
                 <canvas width="300" height="200" id="iter"></canvas>
             </p>
+
+            <h1>Таблиця результатів: </h1>
+            <table id="table">
+                <thead>
+                  <tr>
+                    <th>e</th>
+                    <th>n</th>
+                    <th>x</th>
+                    <th>f(x)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>0.01</td>
+                    <td id="i01n"></td>
+                    <td id="i01x"></td>
+                    <td id="i01fx"></td>
+                  </tr>
+                  <tr>
+                    <td>0.001</td>
+                    <td id="i001n"></td>
+                    <td id="i001x"></td>
+                    <td id="i001fx"></td>
+                  </tr>
+                  <tr>
+                    <td>0.0001</td>
+                    <td id="i0001n"></td>
+                    <td id="i0001x"></td>
+                    <td id="i0001fx"></td>
+                  </tr>
+                </tbody>
+                </table>
 
             <div id="iterErrors"></div>
             
@@ -58,6 +91,37 @@
             <p>
                 <canvas width="300" height="200" id="duhot"></canvas>
             </p>
+            <h1>Таблиця результатів: </h1>
+            <table id="table">
+                <thead>
+                  <tr>
+                    <th>e</th>
+                    <th>n</th>
+                    <th>x</th>
+                    <th>f(x)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>0.01</td>
+                    <td id="d01n"></td>
+                    <td id="d01x"></td>
+                    <td id="d01fx"></td>
+                  </tr>
+                  <tr>
+                    <td>0.001</td>
+                    <td id="d001n"></td>
+                    <td id="d001x"></td>
+                    <td id="d001fx"></td>
+                  </tr>
+                  <tr>
+                    <td>0.0001</td>
+                    <td id="d0001n"></td>
+                    <td id="d0001x"></td>
+                    <td id="d0001fx"></td>
+                  </tr>
+                </tbody>
+                </table>
             <div id="duhotErrors"></div>
             <p>
                 Кількість розбиттів:

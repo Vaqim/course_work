@@ -14,14 +14,30 @@ window.onload = function() {
         return ((1 * Math.pow(x, 2)) / (Math.pow(x, 2) + 1)) + 2 * x * Math.atan(x);
     }
 
+    function getAmountOfRoots(start, end){
+        let step = (x2 - x1) / 10;
+        let roots = [];
+        for (let i = start; i < end; i += step){
+            if (f(i) === 0 || f(i) * f(i + step) < 0){
+                roots.push([i.toFixed(2), (i+step).toFixed(2)]);
+            }
+        }
+        return roots;
+    }
+
+    function countIter(a, b, n){
+
+    }
+
     function iteratorFunc(a, b, n) {
         let result = {
             start: {},
-            end: {}
+            end: {},
+            iterCounter: 0
         };
-
         for (let i = a; i < b; i += n){
             let j = +i.toFixed(4);
+            result.iterCounter++;
             if (f(j) === 0 || f(j) * f(j + n) < 0) {
                 result.start.x = j;
                 result.start.y = f(j);
@@ -142,8 +158,6 @@ window.onload = function() {
             errorsField.textContent = 'X1 >= X2';
             return false;
         }
-
-        document.getElementById('methods').hidden = false;
         
         const ctx = document.getElementById('main').getContext('2d');
 
@@ -172,6 +186,21 @@ window.onload = function() {
                 }
             }
         });
+
+        let roots = getAmountOfRoots(x1, x2);
+
+        if( roots.length === 0){
+            document.getElementById('amuontOfRoots').textContent = 'Немає коренів на проміжку';
+            document.getElementById('amuontOfRoots').className = 'warning';
+        } else {
+            document.getElementById('amuontOfRoots').innerHTML = `Кількість коренів: ${roots.length}, на проміжку(ах):<br>`;
+            for(root of roots){
+                document.getElementById('amuontOfRoots').append(`[${root[0]}, ${root[1]}] `);
+            }
+            document.getElementById('amuontOfRoots').className = 'success';
+        }
+        
+        document.getElementById('methods').hidden = false;
         
     });
 
@@ -199,6 +228,8 @@ window.onload = function() {
 
         errorsField.className = 'success';
         errorsField.textContent = `Корінь: ~${+((results.start.x + results.end.x) / 2).toFixed(4)}`;
+
+
 
         let data = {
             labels: getArrayRange(x1, x2, step),
