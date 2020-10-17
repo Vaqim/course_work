@@ -6,14 +6,12 @@ window.onload = function() {
     // variant 16
     function f(x) {
         //return Math.pow(x, 2) - Math.log(x);
-        //return Math.pow(x, 2) - Math.cos(x);
-        return Math.pow(x, 2) * Math.atan(x) - 1; // *
+        return Math.pow(x, 2) * Math.atan(x) - 1;
     }
     // variant 16
     function F(x) {
         //return 2 * x + (-1 / x);
-        //return 2 * x + Math.sin(x);
-        return ((1 * Math.pow(x, 2)) / (Math.pow(x, 2) + 1)) + 2 * x * Math.atan(x); // *
+        return ((1 * Math.pow(x, 2)) / (Math.pow(x, 2) + 1)) + 2 * x * Math.atan(x);
     }
 
     function iteratorFunc(a, b, n) {
