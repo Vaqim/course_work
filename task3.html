@@ -43,57 +43,151 @@
 
     <div id="methods">
         <article>
-            <h1>Таблиця результатів: </h1>
-            <table id="table">
-                <thead>
-                  <tr>
-                    <th>N</th>
-                    <th>Аналітичне значення</th>
-                    <th>Метод прямокутників</th>
-                    <th>Метод трапецій</th>
-                    <th>Метод Симпсона</th>
-                    <th>Метод Мотне-Карло</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>10</td>
-                    <td rowspan="5" id="tAn"></td>
-                    <td id="tRect10"></td>
-                    <td id="tTrap10"></td>
-                    <td id="tSim10"></td>
-                    <td id="tMonte10"></td>
-                  </tr>
-                  <tr>
-                    <td>20</td>
-                    <td id="tRect20"></td>
-                    <td id="tTrap20"></td>
-                    <td id="tSim20"></td>
-                    <td id="tMonte20"></td>
-                  </tr>
-                  <tr>
-                    <td>50</td>
-                    <td id="tRect50"></td>
-                    <td id="tTrap50"></td>
-                    <td id="tSim50"></td>
-                    <td id="tMonte50"></td>
-                  </tr>
-                  <tr>
-                    <td>100</td>
-                    <td id="tRect100"></td>
-                    <td id="tTrap100"></td>
-                    <td id="tSim100"></td>
-                    <td id="tMonte100"></td>
-                  </tr>
-                  <tr>
-                    <td>1000</td>
-                    <td id="tRect1000"></td>
-                    <td id="tTrap1000"></td>
-                    <td id="tSim1000"></td>
-                    <td id="tMonte1000"></td>
-                  </tr>
-                </tbody>
-                </table>
+            <h1>Таблиці результатів: </h1>
+            <!-- rectangle table -->
+            <p>
+              Таблиця для методу прямокутників:
+            </p>
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>N</th>
+                      <th>Аналітичне значення</th>
+                      <th>Метод прямокутників</th>
+                      <th>Абсолютна похибка</th>
+                      <th>Відносна похибка</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>10</td>
+                      <td rowspan="5" id="rectAn"></td>
+                      <td id="rect10"></td>
+                      <td id="rectAbs10"></td>
+                      <td id="rectRel10"></td>
+                    </tr>
+                    <tr>
+                      <td>20</td>
+                      <td id="rect20"></td>
+                      <td id="rectAbs20"></td>
+                      <td id="rectRel20"></td>
+                    </tr>
+                    <tr>
+                      <td>50</td>
+                      <td id="rect50"></td>
+                      <td id="rectAbs50"></td>
+                      <td id="rectRel50"></td>
+                    </tr>
+                    <tr>
+                      <td>100</td>
+                      <td id="rect100"></td>
+                      <td id="rectAbs100"></td>
+                      <td id="rectRel100"></td>
+                    </tr>
+                    <tr>
+                      <td>1000</td>
+                      <td id="rect1000"></td>
+                      <td id="rectAbs1000"></td>
+                      <td id="rectRel1000"></td>
+                    </tr>
+                  </tbody>
+                  </table>
+                  <p>
+                    Таблиця для методу трапецій:
+                  </p>
+                  <!-- trap table -->
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>N</th>
+                        <th>Аналітичне значення</th>
+                        <th>Метод трапецій</th>
+                        <th>Абсолютна похибка</th>
+                        <th>Відносна похибка</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>10</td>
+                        <td rowspan="5" id="trapAn"></td>
+                        <td id="trap10"></td>
+                        <td id="trapAbs10"></td>
+                        <td id="trapRel10"></td>
+                      </tr>
+                      <tr>
+                        <td>20</td>
+                        <td id="trap20"></td>
+                        <td id="trapAbs20"></td>
+                        <td id="trapRel20"></td>
+                      </tr>
+                      <tr>
+                        <td>50</td>
+                        <td id="trap50"></td>
+                        <td id="trapAbs50"></td>
+                        <td id="trapRel50"></td>
+                      </tr>
+                      <tr>
+                        <td>100</td>
+                        <td id="trap100"></td>
+                        <td id="trapAbs100"></td>
+                        <td id="trapRel100"></td>
+                      </tr>
+                      <tr>
+                        <td>1000</td>
+                        <td id="trap1000"></td>
+                        <td id="trapAbs1000"></td>
+                        <td id="trapRel1000"></td>
+                      </tr>
+                    </tbody>
+                    </table>
+                    <p>
+                      Таблиця для методу Монте-Карло:
+                    </p>
+                    <!-- montecartlo table -->
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>N</th>
+                          <th>Аналітичне значення</th>
+                          <th>Метод Монте-Карло</th>
+                          <th>Абсолютна похибка</th>
+                          <th>Відносна похибка</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>10</td>
+                          <td rowspan="5" id="mcAn"></td>
+                          <td id="mc10"></td>
+                          <td id="mcAbs10"></td>
+                          <td id="mcRel10"></td>
+                        </tr>
+                        <tr>
+                          <td>20</td>
+                          <td id="mc20"></td>
+                          <td id="mcAbs20"></td>
+                          <td id="mcRel20"></td>
+                        </tr>
+                        <tr>
+                          <td>50</td>
+                          <td id="mc50"></td>
+                          <td id="mcAbs50"></td>
+                          <td id="mcRel50"></td>
+                        </tr>
+                        <tr>
+                          <td>100</td>
+                          <td id="mc100"></td>
+                          <td id="mcAbs100"></td>
+                          <td id="mcRel100"></td>
+                        </tr>
+                        <tr>
+                          <td>1000</td>
+                          <td id="mc1000"></td>
+                          <td id="mcAbs1000"></td>
+                          <td id="mcRel1000"></td>
+                        </tr>
+                      </tbody>
+                      </table>
                 <p>
                   <button id="refreshMonteCarlo">Перерахувати метод Монте-Карло</button>
                 </p>

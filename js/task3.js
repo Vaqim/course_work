@@ -25,8 +25,7 @@ window.onload = () => {
     }
 
     function analitical(start, end){
-        let result = F(end) - F(start);
-        document.getElementById('analitical').innerHTML = `На проміжку [${start}, ${end}]<br>Площа криволінійної трапеції: ${result.toFixed(4)}`;
+        let result = F(end) - F(start); 
         return result;
     }
 
@@ -234,28 +233,49 @@ window.onload = () => {
         X1 = +document.getElementById('x1').value;
         X2 = +document.getElementById('x2').value;
         Iters = +document.getElementById('numberOfIters').value;
-        
+
         let alerts = document.getElementById('mainAlertField');
 
         alerts.textContent = '';
         alerts.className = '';
-
-        console.log(analitical(X1, X2));
 
         if(X1 >= X2) {
             alerts.textContent = 'X1 >= X2';
             alerts.className = 'error';
             return false;
         }
-        
         document.getElementById('methods').hidden = false;
 
-        document.getElementById('tAn').textContent = `${analitical(X1, X2).toFixed(4)}`;
-        for (iter of iterations){
-            document.getElementById(`tRect${iter}`).textContent = `${tRectangle(X1, X2, iter).toFixed(4)}`;
-            document.getElementById(`tTrap${iter}`).textContent = `${trapezoid(X1, X2, iter).toFixed(4)}`;
-            document.getElementById(`tSim${iter}`).textContent = `${simpson(X1, X2, iter).toFixed(4)}`;
-            document.getElementById(`tMonte${iter}`).textContent = `${tMonteCarlo(X1, X2, iter).toFixed(4)}`;
+        let analit = analitical(X1, X2);
+        document.getElementById('analitical').innerHTML = `На проміжку [${X1}, ${X2}]<br>Площа криволінійної трапеції: ${analit.toFixed(4)}`;
+        
+        let methods = ['rect', 'trap', 'mc'];
+
+        for (method of methods){
+            document.getElementById(`${method}An`).textContent = analit.toFixed(5);
+        }
+        
+        
+        for(iter of iterations){
+            const rect = tRectangle(X1, X2, iter);
+            const trap = trapezoid(X1, X2, iter);
+            const mc = tMonteCarlo(X1, X2, iter);
+
+            const absRect = Math.abs(analit - rect);
+            const absTrap = Math.abs(analit - trap);
+            const absMc = Math.abs(analit - mc);
+
+            document.getElementById(`rect${iter}`).textContent = rect.toFixed(5);
+            document.getElementById(`rectAbs${iter}`).textContent = absRect.toFixed(5);
+            document.getElementById(`rectRel${iter}`).textContent = `${((absRect / analit) * 100).toFixed(2)}%`;
+
+            document.getElementById(`trap${iter}`).textContent = trap.toFixed(5);
+            document.getElementById(`trapAbs${iter}`).textContent = absTrap.toFixed(5);
+            document.getElementById(`trapRel${iter}`).textContent = `${((absTrap / analit) * 100).toFixed(2)}%`;
+
+            document.getElementById(`mc${iter}`).textContent = mc.toFixed(5);
+            document.getElementById(`mcAbs${iter}`).textContent = absMc.toFixed(5);
+            document.getElementById(`mcRel${iter}`).textContent = `${((absMc / analit) * 100).toFixed(2)}%`;
         }
 
         drawRect(X1, X2, Iters);
@@ -265,8 +285,15 @@ window.onload = () => {
     });
 
     document.getElementById('refreshMonteCarlo').addEventListener('click', () => {
+        let analit = analitical(X1, X2);
+        
         for (iter of iterations){
-            document.getElementById(`tMonte${iter}`).textContent = `${tMonteCarlo(X1, X2, iter).toFixed(4)}`;
+            const mc = tMonteCarlo(X1, X2, iter);
+            const absMc = Math.abs(analit - mc);
+
+            document.getElementById(`mc${iter}`).textContent = mc.toFixed(5);
+            document.getElementById(`mcAbs${iter}`).textContent = absMc.toFixed(5);
+            document.getElementById(`mcRel${iter}`).textContent = `${((absMc / analit) * 100).toFixed(2)}%`;
         }
     });
 
