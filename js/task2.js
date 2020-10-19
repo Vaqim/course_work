@@ -41,7 +41,7 @@ window.onload = function(){
         }
         return result;
     }
-
+    // f(e1) = e(еф)
     function f(h, w, e1) {
         try {    
             const part1 = (e1 + 1) / 2;
@@ -121,7 +121,7 @@ window.onload = function(){
 
         for (let i = 1; i <= 6; i++){
             if (document.getElementById(`set${i}`).checked){
-                dataSetNumber = +i - 1;
+                dataSetNumber = i - 1;
                 break;
             }
         }
