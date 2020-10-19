@@ -121,46 +121,6 @@ window.onload = () => {
         return area * height;
     }
 
-    function simpsonDraw(min, max, iters){
-        let d = (max - min) / iters;
-        let start = min;
-        let dataSet = {
-            label: "",
-            function: ()=>{},
-            data: [], 
-            borderColor: "green",
-            fill: true,
-            radius: 3,
-            order: 0,
-            backgroundColor: 'rgba(4, 99, 7, 0.6)'
-        };
-
-        for (let i = 0; i < iters; i++){
-            let end = start + d;
-            
-            dataSet.data.push({
-                x: +start.toFixed(2),
-                y: +f(start).toFixed(2)
-            });
-            start = end;
-        }
-        dataSet.data.push({
-            x: +start.toFixed(2),
-            y: +f(start).toFixed(2)
-        });
-
-        return dataSet;
-    }
-
-    function simpson(min, max, iters){
-        let height = (max - min) / iters;
-        let area = (f(min) + f(max)) / 2 + 2 * f(min + height / 2);
-        for(let x = min + height; x < max; x += height) {
-            area += 2 * f(x + height / 2) + f(x);
-        }
-        return area * height / 3;
-    }
-
     function getRandomArbitrary(min, max) {
         return Math.random() * (max - min) + min;
     }
@@ -280,7 +240,6 @@ window.onload = () => {
 
         drawRect(X1, X2, Iters);
         drawTrap(X1, X2, Iters);
-        drawSim(X1, X2, Iters);
         drawMontecarlo(X1, X2, Iters);
     });
 
@@ -370,59 +329,6 @@ window.onload = () => {
         }
         const area = trapezoid(x1, x2, iters);
         const result = trapDraw(x1, x2, iters);
-
-        data.datasets = data.datasets.concat(result);
-
-        alerts.className = 'success';
-        alerts.textContent = `Площа криволінійної трапеції: ${area.toFixed(4)}`;
-
-        let myBarChart = new Chart(ctx, {
-            type: 'line',
-            data: data,
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                },
-                legend: {
-                    display: false
-                },
-                animation: {
-                    duration: 0
-                },
-                hover: {
-                    animationDuration: 0
-                },
-                responsiveAnimationDuration: 0
-            }
-        });
-    }
-
-    const drawSim = (x1, x2, iters) => {
-        const ctx = document.getElementById('simpson').getContext('2d');
-
-        let alerts = document.getElementById('simpsonAlertField');
-        alerts.textContent = '';
-        alerts.className = '';
-
-        let data = {
-            labels: getArrayRange(x1, x2, 0.01),
-            datasets: [{
-                label: "f(x) ",
-                function: f,
-                data: [],
-                borderColor: "rgba(75, 192, 192, 1)",
-                fill: false,
-                radius: 0,
-                order: 1
-            }]
-        }
-
-        const area = simpson(x1, x2, iters);
-        const result = simpsonDraw(x1, x2, iters);
 
         data.datasets = data.datasets.concat(result);
 
