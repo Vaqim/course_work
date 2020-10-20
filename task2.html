@@ -21,51 +21,41 @@
         </p>
         <p>
             X1:
-            <input type="text" placeholder="0" id="x1" value="0"><br><br>
+            <input type="text" placeholder="0" id="x1" value="-2"><br><br>
             X2: 
-            <input type="text" placeholder="50" id="x2" value="50">
+            <input type="text" placeholder="50" id="x2" value="9">
         </p>
-        <canvas id="main"></canvas>
-        <div id="mainAlertField"></div>
-        <p>
-            <button id="drawMain">Намалювати графік</button>
-        </p>
+        <p>Оберіть випадок: </p>
+        <div class="form_radio_btn">
+            <input id="set1" type="radio" name="radio" value="1" checked>
+            <label for="set1">h: 2, W: 1, e: 5.3</label>
+        </div>
+        <div class="form_radio_btn">
+            <input id="set2" type="radio" name="radio" value="2">
+            <label for="set2">h: 0.5, W: 0.2, e: 4.8</label>
+        </div>
+        <div class="form_radio_btn">
+            <input id="set3" type="radio" name="radio" value="3">
+            <label for="set3">h: 1, W: 0.3, e: 5.5</label>
+        </div>
+        <div class="form_radio_btn">
+            <input id="set4" type="radio" name="radio" value="4">
+            <label for="set4">h: 0.5, W: 0.4, e: 3.5</label>
+        </div>
+        <div class="form_radio_btn">
+            <input id="set5" type="radio" name="radio" value="5">
+            <label for="set5">h: 0.5, W: 0.1, e: 4.3</label>
+        </div>
+        <div class="form_radio_btn">
+            <input id="set6" type="radio" name="radio" value="6">
+            <label for="set6">h: 1, W: 0.3, e: 4.8</label>
+        </div>
+            <p>
+                <button id="drawMain">Намалювати графік</button>
+            </p> 
+            <canvas id="main"></canvas>
+        <div id="mainAlertField"></div>        
     </article>
-
-    <div id="setSection">
-        <article>
-            <p>Оберіть випадок: </p>
-            <p>
-                <div class="form_radio_btn">
-                    <input id="set1" type="radio" name="radio" value="1" checked>
-                    <label for="set1">h: 2, W: 1, e: 5.3</label>
-                </div>
-                <div class="form_radio_btn">
-                    <input id="set2" type="radio" name="radio" value="2" checked>
-                    <label for="set2">h: 0.5, W: 0.2, e: 4.8</label>
-                </div>
-                <div class="form_radio_btn">
-                    <input id="set3" type="radio" name="radio" value="3" checked>
-                    <label for="set3">h: 1, W: 0.3, e: 5.5</label>
-                </div>
-                <div class="form_radio_btn">
-                    <input id="set4" type="radio" name="radio" value="4" checked>
-                    <label for="set4">h: 0.5, W: 0.4, e: 3.5</label>
-                </div>
-                <div class="form_radio_btn">
-                    <input id="set5" type="radio" name="radio" value="5" checked>
-                    <label for="set5">h: 0.5, W: 0.1, e: 4.3</label>
-                </div>
-                <div class="form_radio_btn">
-                    <input id="set6" type="radio" name="radio" value="6" checked>
-                    <label for="set6">h: 1, W: 0.3, e: 4.8</label>
-                </div>
-            </p>
-            <p>
-                <button id="goToMethods">Відкрити методи</button>
-            </p>
-        </article>
-    </div>
 
     <div id="methodSection">
         <article>
