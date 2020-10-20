@@ -25,10 +25,6 @@ window.onload = function() {
         return roots;
     }
 
-    function countIter(a, b, n){
-
-    }
-
     function iteratorFunc(a, b, n) {
         let result = {
             start: {},
