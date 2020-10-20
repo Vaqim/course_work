@@ -27,7 +27,6 @@ window.onload = function(){
     },];
     let dataSetNumber;
 
-    document.getElementById('setSection').hidden = true;
     document.getElementById('methodSection').hidden = true;
 
     function roundInt(integer){
@@ -37,22 +36,13 @@ window.onload = function(){
     function getArrayRange(start, end, step){
         let result = [];
         for (let i = start; i <= end; i += step){
-            result.push(+i.toFixed(2));
+            result.push(+i.toFixed(3));
         }
         return result;
     }
-    // f(e1) = e(еф)
+
     function f(h, w, e1) {
-        try {    
-            const part1 = (e1 + 1) / 2;
-            const part2 = 1 + ((e1 - 1) / (e1 + 1));
-            const part3 = Math.log(Math.PI / 2) + (Math.log(Math.PI / 4) / e1);
-            const part4 = Math.log((8 * h) / w);
-            return part1 * (part2 * (part3 / part4));
-        } catch(e) {
-            console.log(e.message);
-            return false;
-        }
+        return (e1 + 1) / 2 * (1 + ((e1 - 1) / (e1 + 1)) * (Math.log(Math.PI / 2) + (Math.log(Math.PI / 4) / e1) / Math.log((8 * h) / w)));
     }
 
     function duhotFunc(start, end, h, w, e, iterations) {
@@ -62,10 +52,13 @@ window.onload = function(){
             red: {}
         };
         let center;
-
-        for(let i = 0; i < iterations; i++) {
+        
+        for(let i = 0; i < iterations - 1; i++) {
             center = (start + end) / 2;
-
+            if(Math.abs((f(h, w, center) - e) * (f(h, w, end) - e)) === Infinity){
+                end = center;
+                continue;
+            }
             if((f(h, w, center) - e) * (f(h, w, end) - e) <= 0){
                 start = center;
             } else {
@@ -100,6 +93,9 @@ window.onload = function(){
 
         for (let i = a; i < b; i += n){
             let j = i;
+
+            if(Math.abs((f(h, w, j) - e) - (f(h, w, j + n) - e )) >= n * 100) continue;
+
             if (f(h, w, j) === e || (f(h, w, j) - e) * (f(h, w, j + n) - e) < 0) {
                 result.start.y = j;
                 result.start.x = f(h, w, j);
@@ -132,19 +128,20 @@ window.onload = function(){
             return false;
         }
 
-        document.getElementById('setSection').hidden = false;
+        document.getElementById('methodSection').hidden = false;
 
         const ctx = document.getElementById('main').getContext('2d');
 
         let data = {
-            labels: getArrayRange(X1, X2, 0.1),
+            labels: getArrayRange(X1, X2, 0.001),
             datasets: [{
                 label: "f(x) ",
                 function: function(x) { return +f(dataSet[dataSetNumber].h, dataSet[dataSetNumber].w, x).toFixed(3) },
                 data: [],
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
-                radius: 0
+                radius: 0,
+                spanGaps: false,
             }]
         }
 
@@ -168,10 +165,6 @@ window.onload = function(){
                 responsiveAnimationDuration: 0
             }
         });
-    });
-
-    document.getElementById('goToMethods').addEventListener('click', () => {
-        document.getElementById('methodSection').hidden = false;
     });
 
     document.getElementById('drawIter').addEventListener('click', () => {
@@ -204,10 +197,10 @@ window.onload = function(){
         const ctx = document.getElementById('iter').getContext('2d');
 
         let data = {
-            labels: getArrayRange(X1, X2, 0.01),
+            labels: getArrayRange(X1, X2, 0.001),
             datasets: [{
                 label: "f(x) ",
-                function: function(x) { return +f(dataSet[dataSetNumber].h, dataSet[dataSetNumber].w, x).toFixed(2) },
+                function: function(x) { return +f(dataSet[dataSetNumber].h, dataSet[dataSetNumber].w, x).toFixed(3) },
                 data: [],
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
@@ -272,7 +265,7 @@ window.onload = function(){
 
         if(!results) {
             alertField.className = 'warning';
-            alertField.textContent = 'Немає коренів на проміжку';
+            alertField.textContent = 'Коренів не знайдено';
             return false;
         }
         alertField.className = 'success';
@@ -282,10 +275,10 @@ window.onload = function(){
         const ctx = document.getElementById('duhot').getContext('2d');
 
         let data = {
-            labels: getArrayRange(X1, X2, 0.01),
+            labels: getArrayRange(X1, X2, 0.001),
             datasets: [{
                 label: "f(x) ",
-                function: x => {return +f(dataSet[dataSetNumber].h, dataSet[dataSetNumber].w, x).toFixed(2)},
+                function: x => {return +f(dataSet[dataSetNumber].h, dataSet[dataSetNumber].w, x).toFixed(3)},
                 data: [],
                 borderColor: "rgba(75, 192, 192, 1)",
                 fill: false,
