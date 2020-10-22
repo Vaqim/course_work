@@ -125,10 +125,18 @@ window.onload = () => {
         return Math.random() * (max - min) + min;
     }
 
+    function getYMax(min, max){
+        let maximum = 0;
+        for(let i = min; i < max; i += 0.1){
+            f(i) > maximum ? maximum = f(i) : maximum;
+        }
+        return maximum;
+    }
+
     function tMonteCarlo(min, max, dots){
         let goodDots = 0;
         let yMin = 0;
-        let yMax = 4;
+        let yMax = getYMax(min, max);
 
         let area = (yMax - yMin) * (max - min);
 
@@ -146,7 +154,7 @@ window.onload = () => {
     function monteCarlo(min, max, dots){
         let goodDots = 0;
         let yMin = 0;
-        let yMax = 4;
+        let yMax = getYMax(min, max);
         let dotsDatasets = [];
 
         let area = (yMax - yMin) * (max - min);
